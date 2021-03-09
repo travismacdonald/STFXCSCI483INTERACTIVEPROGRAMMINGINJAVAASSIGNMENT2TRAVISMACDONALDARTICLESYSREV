@@ -4,7 +4,7 @@
     <artifactId>CSCI483TemplateSite</artifactId>
     <version>5.13</version>
     <packaging>war</packaging>
-    <name>CSCI483TemplateSite</name>
+    <name>ArticleRevSys</name>
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
