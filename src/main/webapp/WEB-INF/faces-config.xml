@@ -8,17 +8,22 @@
               version="2.0">
 
     <navigation-rule>
-        <from-view-id>*</from-view-id>
+        
+        <from-view-id>home.xhtml</from-view-id>
+        
         <navigation-case>
             <from-outcome>make_review</from-outcome>
             <to-view-id>/review_form.xhtml</to-view-id>
             <redirect/>
         </navigation-case> 
+        
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/home.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
     </navigation-rule>
+
 </faces-config>
        
