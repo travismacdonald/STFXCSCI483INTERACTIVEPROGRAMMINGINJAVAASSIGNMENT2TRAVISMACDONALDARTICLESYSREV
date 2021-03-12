@@ -1,9 +1,10 @@
 package ca.csci483.myprojectname.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class Review {
+public class Review implements Serializable {
     
     private Publication publication;
     
@@ -19,4 +20,6 @@ public class Review {
     
     private Recommendation recommendation;
     
+    private String reviewerName;
+
 }

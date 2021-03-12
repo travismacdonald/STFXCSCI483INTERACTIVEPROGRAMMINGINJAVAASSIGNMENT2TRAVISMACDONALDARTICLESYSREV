@@ -1,7 +1,9 @@
 package ca.csci483.myprojectname.model;
 
+import java.io.Serializable;
 
-public class Publication {
+
+public class Publication implements Serializable {
 
     private String url;
 
