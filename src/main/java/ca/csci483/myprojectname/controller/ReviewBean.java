@@ -8,18 +8,47 @@ package ca.csci483.myprojectname.controller;
 import ca.csci483.myprojectname.model.Publication;
 import ca.csci483.myprojectname.model.Review;
 import java.io.Serializable;
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 @SessionScoped
 @Named("reviewBean")
 public class ReviewBean implements Serializable {
-    
-    private Review review;    
+
+    private Review review = new Review();   
 
     public void attemptReviewSubmission() {
-        System.out.println("aoseunthaosnetuhaosenuth");
+        System.out.println("Reviewer name: " + review.getReviewerName());
+    }
+
+    public String getReviewerName() {
+        return review.getReviewerName();
+    }
+
+    public void setReviewerName(String reviewerName) {
+        review.setReviewerName(reviewerName);
     }
     
+    public void addMajorPoint() {
+        review.addMajorPoint();
+        System.out.println("fuck you");
+        System.out.println(review.getMajorPoints().size());
+    }
+    
+    public List<String> getMajorPoints() {
+        return review.getMajorPoints();
+    }
+    
+    public String getMajorPointAtIx(int ix) {
+        return review.getMajorPointAtIx(ix);
+    }
+    
+    public void setMajorPointAtIx(int ix, String majorPoint) {
+        review.setMajorPointAtIx(ix, majorPoint);
+    }
+
 }
