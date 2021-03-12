@@ -57,14 +57,23 @@
                         <p:column>
                             <p:inputTextarea value="#{reviewBean.majorPoints[table.rowIndex]}"/>
                         </p:column>
+                        <p:column>
+                            <p:commandButton 
+                                value="remove" 
+                                type="submit"
+                                actionListener="#{reviewBean.removeMajorPointAtIx(table.rowIndex)}"
+                                update="majorPointsTable"
+                                process="@this"/>
+                        </p:column>
                     </p:dataTable>
-                    
 
-                    <p:commandButton value="add"
-                                     type="submit"
-                                     actionListener="#{reviewBean.addMajorPoint()}" 
-                                     oncomplete="PF('majorPointsTable').addRow();" 
-                                     process="@this" />
+
+                    <p:commandButton 
+                        value="add"
+                        type="submit"
+                        actionListener="#{reviewBean.addMajorPoint()}" 
+                        oncomplete="PF('majorPointsTable').addRow();" 
+                        process="@this" />
 
 
                     <p:outputLabel value="Minor Points"></p:outputLabel>

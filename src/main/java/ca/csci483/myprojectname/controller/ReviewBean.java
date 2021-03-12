@@ -42,6 +42,11 @@ public class ReviewBean implements Serializable {
         System.out.println(review.getMajorPoints().size());
     }
     
+    public void removeMajorPointAtIx(int ix) {
+        review.getMajorPoints().remove(ix);
+        System.out.println("REMOVE: " + ix);
+    }
+    
     public List<String> getMajorPoints() {
         return review.getMajorPoints();
     }
