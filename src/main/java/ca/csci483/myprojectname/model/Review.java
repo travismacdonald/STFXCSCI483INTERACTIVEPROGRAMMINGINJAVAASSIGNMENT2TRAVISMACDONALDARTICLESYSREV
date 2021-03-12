@@ -16,9 +16,9 @@ public class Review implements Serializable {
     
     private List<String> negatives;
     
-    private List<String> majorPoints = new ArrayList(Arrays.asList("aoeu", ",,,,", "uea"));
+    private List<String> majorPoints = new ArrayList(Arrays.asList("", "", ""));
     
-    private List<String> minorPoints;
+    private List<String> minorPoints = new ArrayList(Arrays.asList(""));
     
     private Recommendation recommendation;
     

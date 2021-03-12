@@ -60,6 +60,9 @@ public class ReviewBean implements Serializable {
     }
     
     public void removeMinorPointAtIx(int ix) {
+        for (String point : review.getMajorPoints()) {
+        
+        }
         review.getMinorPoints().remove(ix);
         System.out.println("REMOVED MINOR POINT at ix " + ix);
     }

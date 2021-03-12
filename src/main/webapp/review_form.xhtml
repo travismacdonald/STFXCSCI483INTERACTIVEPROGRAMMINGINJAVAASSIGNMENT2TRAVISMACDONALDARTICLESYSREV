@@ -26,13 +26,13 @@
                 <h:panelGrid style="height: 600px; width: 400px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
 
                     <p:outputLabel style="margin: auto auto !important" value="Publication Title"></p:outputLabel>
-                    <p:inputText style="margin: 0 20px" value="Title"></p:inputText>
+                    <p:inputText style="margin: 0 20px" placeholder="Title"></p:inputText>
 
                     <p:outputLabel value="Publication Url"></p:outputLabel>
-                    <p:inputText value="Url"></p:inputText>
+                    <p:inputText placeholder="Url"></p:inputText>
 
                     <p:outputLabel value="Summary"></p:outputLabel>
-                    <p:inputTextarea value="Summary"></p:inputTextarea>
+                    <p:inputTextarea placeholder="Write your summary here."></p:inputTextarea>
 
                     <p:outputLabel value="Positives"></p:outputLabel>
 
@@ -40,35 +40,27 @@
 
                     <p:outputLabel value="Positives"></p:outputLabel>
 
-
-                    <p:outputLabel value="Major Points"></p:outputLabel>
-
-
-
                     <p:dataTable id="majorPointsTable" 
                                  editable="true"
-                                 binding="#{table}"
+                                 binding="#{majorPointsBinding}"
                                  widgetVar="majorPointsTable" 
                                  value="#{reviewBean.majorPoints}" 
                                  var="point">
-
-
                         <f:facet name="header">Major Points</f:facet>
                         <p:column>
-                            <p:inputTextarea value="#{reviewBean.majorPoints[table.rowIndex]}"/>
+                            <p:inputTextarea 
+                                placeholder="Major Point ##{majorPointsBinding.rowIndex + 1}" 
+                                value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"/>
                         </p:column>
                         <p:column>
                             <p:commandButton 
                                 value="remove" 
                                 type="submit"
-                                actionListener="#{reviewBean.removeMajorPointAtIx(table.rowIndex)}"
+                                actionListener="#{reviewBean.removeMajorPointAtIx(majorPointsBinding.rowIndex)}"
                                 update="majorPointsTable"
                                 process="@this"/>
-
                         </p:column>
-
                     </p:dataTable>
-
                     <p:commandButton 
                         value="add"
                         type="submit"
@@ -76,11 +68,33 @@
                         oncomplete="PF('majorPointsTable').addRow();" 
                         process="@this" />
 
-
-
-
-
-                    <p:outputLabel value="Minor Points"></p:outputLabel>
+                    <p:dataTable id="minorPointsTable" 
+                                 editable="true"
+                                 binding="#{minorPointsBinding}"
+                                 widgetVar="minorPointsTable" 
+                                 value="#{reviewBean.minorPoints}" 
+                                 var="point">
+                        <f:facet name="header">Minor Points</f:facet>
+                        <p:column>
+                            <p:inputTextarea 
+                                value="#{reviewBean.minorPoints[minorPointsBinding.rowIndex]}"
+                                placeholder="Minor Point ##{minorPointsBinding.rowIndex + 1}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton 
+                                value="remove" 
+                                type="submit"
+                                actionListener="#{reviewBean.removeMinorPointAtIx(minorPointsBinding.rowIndex)}"
+                                update="minorPointsTable"
+                                process="@this"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton 
+                        value="add"
+                        type="submit"
+                        actionListener="#{reviewBean.addMinorPoint()}" 
+                        oncomplete="PF('minorPointsTable').addRow();" 
+                        process="@this" />
 
                     <p:outputLabel value="Recommendation"></p:outputLabel>
                     <p:selectOneMenu></p:selectOneMenu>
