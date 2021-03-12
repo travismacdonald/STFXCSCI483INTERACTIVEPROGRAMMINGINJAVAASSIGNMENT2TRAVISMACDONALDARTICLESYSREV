@@ -6,18 +6,50 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="/template/_template.xhtml">
+    
+    <h:head>
+        <h:outputStylesheet library="css" name="articlerevsys.css"/>
+    </h:head>
+    
+    
     <ui:define name="metaInfo">
+        
 
     </ui:define>
+    
     <ui:define name="tracker"/>
     <ui:define name="centerpane"> 
-        <div style="height: 1320px; width: 100%; padding-left: 40%; padding-top: 15%">
+        <div style="padding: auto auto; border: 1px; border-style: solid;">
 
             <h:form>
 
-                <h:panelGrid columns="2">
-                    <p:commandButton value="Make Review" action="make_review"></p:commandButton>
-                    <p:outputLabel value="fuck you steve"></p:outputLabel>
+                <h:panelGrid style="height: 600px; width: 400px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
+
+                    <p:outputLabel style="margin: auto auto !important" value="Publication Title"></p:outputLabel>
+                    <p:inputText style="margin: 0 20px" value="Title"></p:inputText>
+
+                    <p:outputLabel value="Publication Url"></p:outputLabel>
+                    <p:inputText value="Url"></p:inputText>
+
+                    <p:outputLabel value="Summary"></p:outputLabel>
+                    <p:inputTextarea value="Summary"></p:inputTextarea>
+                    
+                    <p:outputLabel value="Positives"></p:outputLabel>
+                    
+                    <p:outputLabel value="Negitives"></p:outputLabel>
+                    
+                    <p:outputLabel value="Positives"></p:outputLabel>
+                    
+                    <p:outputLabel value="Major Points"></p:outputLabel>
+                    
+                    <p:outputLabel value="Minor Points"></p:outputLabel>
+                    
+                    <p:outputLabel value="Recommendation"></p:outputLabel>
+                    <p:selectOneMenu></p:selectOneMenu>
+                    
+                    <p:outputLabel value="Reviewer Name"></p:outputLabel>
+
+
 
                 </h:panelGrid>
 

@@ -346,18 +346,18 @@ public class DataUtils {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(type, header, body));
     }
 
-    public static DefaultStreamedContent getDownloadFile(String filePath) {
-        try {
-            //File file = new File(currentUser.getHomeDir() + "/" + fileNm);
-            File file = new File(filePath);
-            InputStream input = new FileInputStream(file);
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            return (new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public static DefaultStreamedContent getDownloadFile(String filePath) {
+//        try {
+//            //File file = new File(currentUser.getHomeDir() + "/" + fileNm);
+//            File file = new File(filePath);
+//            InputStream input = new FileInputStream(file);
+//            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//            return (new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public static void setupFileDownloadZip(User currentUser) {
 
