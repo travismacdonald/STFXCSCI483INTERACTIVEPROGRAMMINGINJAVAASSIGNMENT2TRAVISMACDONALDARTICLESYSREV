@@ -64,9 +64,10 @@
                                 actionListener="#{reviewBean.removeMajorPointAtIx(table.rowIndex)}"
                                 update="majorPointsTable"
                                 process="@this"/>
-                        </p:column>
-                    </p:dataTable>
 
+                        </p:column>
+
+                    </p:dataTable>
 
                     <p:commandButton 
                         value="add"
@@ -74,6 +75,9 @@
                         actionListener="#{reviewBean.addMajorPoint()}" 
                         oncomplete="PF('majorPointsTable').addRow();" 
                         process="@this" />
+
+
+
 
 
                     <p:outputLabel value="Minor Points"></p:outputLabel>

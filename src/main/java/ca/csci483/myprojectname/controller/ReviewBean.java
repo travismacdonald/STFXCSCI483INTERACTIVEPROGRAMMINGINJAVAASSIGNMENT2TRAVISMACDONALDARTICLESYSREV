@@ -38,8 +38,7 @@ public class ReviewBean implements Serializable {
     
     public void addMajorPoint() {
         review.addMajorPoint();
-        System.out.println("fuck you");
-        System.out.println(review.getMajorPoints().size());
+        System.out.println("addMajorPointCalled");
     }
     
     public void removeMajorPointAtIx(int ix) {
@@ -51,8 +50,18 @@ public class ReviewBean implements Serializable {
         return review.getMajorPoints();
     }
     
-    public void setMajorPoints(List<String> majorPoints) {
-        review.setMajorPoints(majorPoints);
+    public List<String> getMinorPoints() {
+        return review.getMinorPoints();
+    }
+    
+    public void addMinorPoint() {
+        review.getMinorPoints().add("");
+        System.out.println("addMinorPointCalled");
+    }
+    
+    public void removeMinorPointAtIx(int ix) {
+        review.getMinorPoints().remove(ix);
+        System.out.println("REMOVED MINOR POINT at ix " + ix);
     }
 
 }

@@ -30,7 +30,11 @@ public class Review implements Serializable {
     
     public void setMajorPoints(List<String> majorPoints) {
         this.majorPoints = majorPoints;
-    } 
+    }
+    
+    public List<String> getMinorPoints() {
+        return minorPoints;
+    }
     
     public void addMajorPoint() {
         majorPoints.add("");
