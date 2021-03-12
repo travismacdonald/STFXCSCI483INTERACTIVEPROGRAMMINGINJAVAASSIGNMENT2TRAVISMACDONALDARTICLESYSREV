@@ -46,14 +46,22 @@
 
 
                     <p:dataTable id="majorPointsTable" 
+                                 editable="true"
+                                 binding="#{table}"
                                  widgetVar="majorPointsTable" 
                                  value="#{reviewBean.majorPoints}" 
                                  var="point">
-                        <f:facet name="header">Major Points</f:facet>
-                        <p:column><p:inputTextarea value="#{point}"/></p:column>
-                    </p:dataTable>
 
-                    <p:commandButton value="add" 
+
+                        <f:facet name="header">Major Points</f:facet>
+                        <p:column>
+                            <p:inputTextarea value="#{reviewBean.majorPoints[table.rowIndex]}"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+
+                    <p:commandButton value="add"
+                                     type="submit"
                                      actionListener="#{reviewBean.addMajorPoint()}" 
                                      oncomplete="PF('majorPointsTable').addRow();" 
                                      process="@this" />
@@ -67,7 +75,10 @@
                     <p:outputLabel value="Reviewer Name"></p:outputLabel>
                     <p:inputText value="#{reviewBean.reviewerName}"/>
 
-                    <p:commandButton value="Blah" action="#{reviewBean.attemptReviewSubmission()}"  ></p:commandButton>
+                    <p:commandButton 
+                        value="Blah" 
+                        type="submit"
+                        action="#{reviewBean.attemptReviewSubmission()}"/>
 
 
 

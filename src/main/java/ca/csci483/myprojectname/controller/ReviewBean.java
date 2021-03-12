@@ -23,6 +23,9 @@ public class ReviewBean implements Serializable {
 
     public void attemptReviewSubmission() {
         System.out.println("Reviewer name: " + review.getReviewerName());
+        for (String point : review.getMajorPoints()) {
+            System.out.println("point: " + point);
+        }
     }
 
     public String getReviewerName() {
@@ -43,12 +46,8 @@ public class ReviewBean implements Serializable {
         return review.getMajorPoints();
     }
     
-    public String getMajorPointAtIx(int ix) {
-        return review.getMajorPointAtIx(ix);
-    }
-    
-    public void setMajorPointAtIx(int ix, String majorPoint) {
-        review.setMajorPointAtIx(ix, majorPoint);
+    public void setMajorPoints(List<String> majorPoints) {
+        review.setMajorPoints(majorPoints);
     }
 
 }

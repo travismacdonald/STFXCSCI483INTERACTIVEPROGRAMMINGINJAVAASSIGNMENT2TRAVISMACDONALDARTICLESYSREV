@@ -16,7 +16,7 @@ public class Review implements Serializable {
     
     private List<String> negatives;
     
-    private List<String> majorPoints = new ArrayList(Arrays.asList("", "", ""));
+    private List<String> majorPoints = new ArrayList(Arrays.asList("aoeu", ",,,,", "uea"));
     
     private List<String> minorPoints;
     
@@ -27,6 +27,10 @@ public class Review implements Serializable {
     public List<String> getMajorPoints() {
         return majorPoints;
     }
+    
+    public void setMajorPoints(List<String> majorPoints) {
+        this.majorPoints = majorPoints;
+    } 
     
     public void addMajorPoint() {
         majorPoints.add("");
