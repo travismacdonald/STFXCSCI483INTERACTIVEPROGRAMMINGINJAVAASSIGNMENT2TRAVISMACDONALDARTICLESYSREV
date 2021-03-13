@@ -53,15 +53,15 @@
                                 type="submit"
                                 actionListener="#{reviewBean.removePositiveAtIx(positivesBinding.rowIndex)}"
                                 update="positivesTable"
-                                process="@this"/>
+                                process="@all"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
                         value="add"
                         type="submit"
                         actionListener="#{reviewBean.addPositive()}" 
-                        oncomplete="PF('positivesTable').addRow();" 
-                        process="@this" />
+                        update="positivesTable"
+                        process="@all" />
 
 
                     <p:dataTable id="negativesTable" 
@@ -83,13 +83,13 @@
                                 type="submit"
                                 actionListener="#{reviewBean.removeNegativeAtIx(negativesBinding.rowIndex)}"
                                 update="negativesTable"
-                                process="@this"/>
+                                process="@all"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
                         value="add"
                         type="submit"
-                        actionListener="#{reviewBean.addPositive()}" 
+                        actionListener="#{reviewBean.addNegative()}" 
                         oncomplete="PF('negativesTable').addRow();" 
                         process="@this" />
 
@@ -98,8 +98,7 @@
                                  editable="true"
                                  binding="#{majorPointsBinding}"
                                  widgetVar="majorPointsTable" 
-                                 value="#{reviewBean.majorPoints}" 
-                                 var="point">
+                                 value="#{reviewBean.majorPoints}" >
                         <f:facet name="header">Major Points</f:facet>
                         <p:column>
                             <p:inputTextarea 
@@ -113,7 +112,7 @@
                                 type="submit"
                                 actionListener="#{reviewBean.removeMajorPointAtIx(majorPointsBinding.rowIndex)}"
                                 update="majorPointsTable"
-                                process="@this"/>
+                                process="@all"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
@@ -127,8 +126,7 @@
                                  editable="true"
                                  binding="#{minorPointsBinding}"
                                  widgetVar="minorPointsTable" 
-                                 value="#{reviewBean.minorPoints}" 
-                                 var="point">
+                                 value="#{reviewBean.minorPoints}" >
                         <f:facet name="header">Minor Points</f:facet>
                         <p:column>
                             <p:inputTextarea 
@@ -141,7 +139,7 @@
                                 type="submit"
                                 actionListener="#{reviewBean.removeMinorPointAtIx(minorPointsBinding.rowIndex)}"
                                 update="minorPointsTable"
-                                process="@this"/>
+                                process="@all"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
@@ -161,8 +159,6 @@
                         value="Blah" 
                         type="submit"
                         action="#{reviewBean.attemptReviewSubmission()}"/>
-
-
 
                 </h:panelGrid>
 
