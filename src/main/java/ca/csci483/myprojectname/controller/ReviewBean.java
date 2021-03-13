@@ -8,6 +8,7 @@ package ca.csci483.myprojectname.controller;
 import ca.csci483.myprojectname.model.Publication;
 import ca.csci483.myprojectname.model.Recommendation;
 import ca.csci483.myprojectname.model.Review;
+import ca.csci483.myprojectname.utils.AsrConstants;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class ReviewBean implements Serializable {
     private Review review = new Review();
 
     public void attemptReviewSubmission() {
-        
+
         System.out.println("attemptReviewSubmission called");
         System.out.println("Reviewer name: " + review.getReviewerName());
         for (String point : review.getMajorPoints()) {
@@ -111,11 +112,11 @@ public class ReviewBean implements Serializable {
         review.getNegatives().remove(ix);
         System.out.println("REMOVED NEGATIVE at ix " + ix);
     }
-    
+
     public List<Recommendation> getRecommendations() {
         return Arrays.asList(Recommendation.values());
     }
-    
+
     @Enumerated(EnumType.STRING)
     private Recommendation recommendation;
 
@@ -126,22 +127,37 @@ public class ReviewBean implements Serializable {
     public void setRecommendation(Recommendation recommendation) {
         this.recommendation = recommendation;
     }
-    
+
     public boolean maxMajorPointsReached() {
-        return review.getMajorPoints().size() == 5;
+        return review.getMajorPoints().size() >= AsrConstants.MAX_MAJOR_POINTS;
     }
-    
+
     public boolean maxMinorPointsReached() {
-        return review.getMinorPoints().size() == 5;
+        return review.getMinorPoints().size() >= AsrConstants.MAX_MINOR_POINTS;
     }
-    
+
     public boolean maxPositivesReached() {
-        return review.getPositives().size() == 5;
+        return review.getPositives().size() >= AsrConstants.MAX_POSITIVES;
     }
-    
+
     public boolean maxNegativesReached() {
-        return review.getNegatives().size() == 5;
+        return review.getNegatives().size() >= AsrConstants.MAX_NEGATIVES;
     }
-    
-    
+
+    public boolean minMajorPointsReached() {
+        return review.getMajorPoints().size() <= AsrConstants.MIN_MAJOR_POINTS;
+    }
+
+    public boolean minMinorPointsReached() {
+        return review.getMinorPoints().size() <= AsrConstants.MIN_MINOR_POINTS;
+    }
+
+    public boolean minPositivesReached() {
+        return review.getPositives().size() <= AsrConstants.MIN_POSITIVES;
+    }
+
+    public boolean minNegativesReached() {
+        return review.getNegatives().size() <= AsrConstants.MIN_NEGATIVES;
+    }
+
 }
