@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:head>
+            <h:outputStylesheet library="css" name="articlerevsys.css"/>
+        </h:head>
+
+        <div style="padding: auto auto; border: 1px; border-style: solid;">
+
+            <h:form id="myForm">
+
+                <h:panelGrid id="myPanel" style="height: 600px; width: 800px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
+
+                    <p:outputLabel value="Publication Title"></p:outputLabel>
+                    <p:inputText placeholder="Title"></p:inputText>
+
+                    <p:outputLabel value="Publication Url"></p:outputLabel>
+                    <p:inputText placeholder="Url"></p:inputText>
+
+                    <p:outputLabel value="Summary"></p:outputLabel>
+                    <p:inputTextarea placeholder="Write your summary here."></p:inputTextarea>
+
+
+
+                    <!-- POSITIVES TABLE -->
+                    <p:dataTable id="positivesTable" 
+                                 editable="true"
+                                 binding="#{positivesBinding}"
+                                 widgetVar="positivesTable" 
+                                 value="#{reviewBean.positives}" 
+                                 var="positive">
+                        <f:facet name="header">Positives</f:facet>
+                        <p:column>
+                            <p:inputTextarea
+                                style="width: 100%; margin-right: 10px"
+                                placeholder="Positive ##{positivesBinding.rowIndex + 1}" 
+                                value="#{reviewBean.positives[positivesBinding.rowIndex]}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton 
+                                id="removePositive"
+                                disabled="#{reviewBean.minPositivesReached()}"
+                                value="remove"
+                                type="submit"
+                                actionListener="#{reviewBean.removePositiveAtIx(positivesBinding.rowIndex)}"
+                                update="@this :myForm:addPositive positivesTable"
+                                process="@this :myForm:addPositive positivesTable"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton 
+                        id="addPositive"
+                        value="Add Positive"
+                        type="submit"
+                        disabled="#{reviewBean.maxPositivesReached()}"
+                        actionListener="#{reviewBean.addPositive()}"
+                        update="@this myForm:positivesTable:removePositive positivesTable"
+                        process="@this myForm:positivesTable:removePositive positivesTable"
+                        />
+
+
+                    <!-- NEGATIVES TABLE -->
+                    <p:dataTable id="negativesTable" 
+                                 editable="true"
+                                 binding="#{negativesBinding}"
+                                 widgetVar="negativesTable" 
+                                 value="#{reviewBean.negatives}" 
+                                 var="negative">
+                        <f:facet name="header">Negatives</f:facet>
+                        <p:column>
+                            <p:inputTextarea 
+                                style="width: 100%; margin-right: 10px"
+                                placeholder="Negative ##{negativesBinding.rowIndex + 1}" 
+                                value="#{reviewBean.negatives[negativesBinding.rowIndex]}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton
+                                id="removeNegative"
+                                value="remove" 
+                                type="submit"
+                                disabled="#{reviewBean.minNegativesReached()}"
+                                actionListener="#{reviewBean.removeNegativeAtIx(negativesBinding.rowIndex)}"
+                                update="@this :myForm:addNegative negativesTable"
+                                process="@this :myForm:addNegative negativesTable"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton
+                        id="addNegative"
+                        value="Add Negative"
+                        type="submit"
+                        disabled="#{reviewBean.maxNegativesReached()}"
+                        actionListener="#{reviewBean.addNegative()}" 
+                        update="@this myForm:negativesTable:removeNegative negativesTable"
+                        process="@this myForm:negativesTable:removeNegative negativesTable" />
+
+
+                    <!-- MAJOR POINTS TABLE -->
+                    <p:dataTable id="majorPointsTable" 
+                                 editable="true"
+                                 binding="#{majorPointsBinding}"
+                                 widgetVar="majorPointsTable" 
+                                 value="#{reviewBean.majorPoints}" >
+                        <f:facet name="header">Major Points</f:facet>
+                        <p:column>
+                            <p:inputTextarea 
+                                style="width: 100%; margin-right: 10px"
+                                placeholder="Major Point ##{majorPointsBinding.rowIndex + 1}" 
+                                value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton
+                                id="removeMajorPoint"
+                                value="remove" 
+                                type="submit"
+                                disabled="#{reviewBean.minMajorPointsReached()}"
+                                actionListener="#{reviewBean.removeMajorPointAtIx(majorPointsBinding.rowIndex)}"
+                                update="@this :myForm:addMajorPoint majorPointsTable"
+                                process="@this :myForm:addMajorPoint majorPointsTable" />
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton 
+                        id="addMajorPoint"
+                        value="Add Major Point"
+                        type="submit"
+                        disabled="#{reviewBean.maxMajorPointsReached()}"
+                        actionListener="#{reviewBean.addMajorPoint()}" 
+                        update="@this myForm:majorPointsTable:removeMajorPoint majorPointsTable"
+                        process="@this myForm:majorPointsTable:removeMajorPoint majorPointsTable"/>
+
+
+                    <!-- MINOR POINTS TABLE -->
+                    <p:dataTable id="minorPointsTable" 
+                                 editable="true"
+                                 binding="#{minorPointsBinding}"
+                                 widgetVar="minorPointsTable" 
+                                 value="#{reviewBean.minorPoints}" >
+                        <f:facet name="header">Minor Points</f:facet>
+                        <p:column>
+                            <p:inputTextarea 
+                                value="#{reviewBean.minorPoints[minorPointsBinding.rowIndex]}"
+                                placeholder="Minor Point ##{minorPointsBinding.rowIndex + 1}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton 
+                                id="removeMinorPoint"
+                                value="remove" 
+                                type="submit"
+                                disabled="#{reviewBean.minMinorPointsReached()}"
+                                actionListener="#{reviewBean.removeMinorPointAtIx(minorPointsBinding.rowIndex)}"
+                                update="@this :myForm:addMinorPoint minorPointsTable"
+                                process="@this :myForm:addMinorPoint minorPointsTable"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton 
+                        id="addMinorPoint"
+                        value="Add Minor Point"
+                        type="submit"
+                        disabled="#{reviewBean.maxMinorPointsReached()}"
+                        actionListener="#{reviewBean.addMinorPoint()}" 
+                        update="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"
+                        process="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"/>
+
+
+                    <p:outputLabel value="Recommendation"></p:outputLabel>
+                    <p:selectOneMenu value="#{reviewBean.recommendation}">
+                        <f:selectItems value="#{reviewBean.recommendations}"></f:selectItems>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Reviewer Name"></p:outputLabel>
+                    <p:inputText value="#{reviewBean.reviewerName}"/>
+
+                    <p:commandButton 
+                        value="Blah" 
+                        type="submit"
+                        actionListener="#{reviewBean.attemptReviewSubmission()}"/>
+
+                </h:panelGrid>
+
+
+            </h:form>
+        </div>
+
+    </h:body>
+
+
+</html>
+
