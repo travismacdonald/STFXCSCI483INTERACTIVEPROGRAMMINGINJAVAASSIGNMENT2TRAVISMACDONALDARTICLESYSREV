@@ -17,6 +17,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @SessionScoped
 @Named("reviewBean")
@@ -40,6 +42,7 @@ public class ReviewBean implements Serializable {
         for (String point : review.getNegatives()) {
             System.out.println("negative: " + point);
         }
+        System.out.println("Rec: " + recommendation);
     }
 
     public String getReviewerName() {
@@ -112,5 +115,17 @@ public class ReviewBean implements Serializable {
     public List<Recommendation> getRecommendations() {
         return Arrays.asList(Recommendation.values());
     }
+    
+    @Enumerated(EnumType.STRING)
+    private Recommendation recommendation;
 
+    public Recommendation getRecommendation() {
+        return recommendation;
+    }
+
+    public void setRecommendation(Recommendation recommendation) {
+        this.recommendation = recommendation;
+    }
+    
+    
 }

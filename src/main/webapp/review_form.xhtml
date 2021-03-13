@@ -161,9 +161,10 @@
 
 
                     <p:outputLabel value="Recommendation"></p:outputLabel>
-<!--                    <p:selectOneMenu>
+                    <p:selectOneMenu value="#{reviewBean.recommendation}">
                         <f:selectItems value="#{reviewBean.recommendations}"></f:selectItems>
-                    </p:selectOneMenu>-->
+                    </p:selectOneMenu>
+
 
                     <p:outputLabel value="Reviewer Name"></p:outputLabel>
                     <p:inputText value="#{reviewBean.reviewerName}"/>
