@@ -127,5 +127,21 @@ public class ReviewBean implements Serializable {
         this.recommendation = recommendation;
     }
     
+    public boolean maxMajorPointsReached() {
+        return review.getMajorPoints().size() == 5;
+    }
+    
+    public boolean maxMinorPointsReached() {
+        return review.getMinorPoints().size() == 5;
+    }
+    
+    public boolean maxPositivesReached() {
+        return review.getPositives().size() == 5;
+    }
+    
+    public boolean maxNegativesReached() {
+        return review.getNegatives().size() == 5;
+    }
+    
     
 }

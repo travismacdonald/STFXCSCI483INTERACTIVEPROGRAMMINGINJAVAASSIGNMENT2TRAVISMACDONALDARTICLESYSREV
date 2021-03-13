@@ -21,9 +21,9 @@
     <ui:define name="centerpane"> 
         <div style="padding: auto auto; border: 1px; border-style: solid;">
 
-            <h:form>
+            <h:form id="myForm">
 
-                <h:panelGrid style="height: 600px; width: 800px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
+                <h:panelGrid id="myPanel" style="height: 600px; width: 800px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
 
                     <p:outputLabel style="margin: auto auto !important" value="Publication Title"></p:outputLabel>
                     <p:inputText style="margin: 0 20px" placeholder="Title"></p:inputText>
@@ -52,21 +52,23 @@
                         </p:column>
                         <p:column>
                             <p:commandButton 
-                                id="remove-positive"
-                                disabled="#{reviewBean.majorPoints.size() == 3}"
+                                id="removePositive"
+                                disabled="#{reviewBean.positives.size() == 1}"
                                 value="remove"
                                 type="submit"
                                 actionListener="#{reviewBean.removePositiveAtIx(positivesBinding.rowIndex)}"
-                                update="positivesTable"
-                                process="positivesTable"/>
+                                update="@this :myForm:addPositive positivesTable"
+                                process="@this :myForm:addPositive positivesTable"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
-                        value="add"
+                        id="addPositive"
+                        value="Add Positive"
                         type="submit"
+                        disabled="#{reviewBean.maxPositivesReached()}"
                         actionListener="#{reviewBean.addPositive()}"
-                        update="positivesTable"
-                        process="@this positivesTable"
+                        update="@this myForm:positivesTable:removePositive positivesTable"
+                        process="@this myForm:positivesTable:removePositive positivesTable"
                         />
 
 
@@ -155,6 +157,7 @@
                     <p:commandButton 
                         value="add"
                         type="submit"
+                        
                         actionListener="#{reviewBean.addMinorPoint()}" 
                         update="minorPointsTable"
                         process="@this minorPointsTable"  />
