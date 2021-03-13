@@ -13,6 +13,6 @@ This application contains some relatively arbitrary design decisions including:
 2. A maximum of 5 points for each of major, minor, positive, and negative critiques.
 3. A minimum of 1 point for each of major, minor, positive, and negative critiques.
 4. A character limit of 1000 for each of major, minor, positive, and negative critiques.
-5. A max length of 50 characters for the publication title.
+5. A max length of 100 characters for the publication title.
 
 The reason for implemented this is to enforce *some* limit on the amount of information that a reviewer can upload. However, it should be noted that this application was designed so that these can be easily modified and/or removed (e.g. ArsConstants can be modified to change global behavior of the entire application).
