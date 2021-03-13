@@ -31,20 +31,36 @@
             }
 
             .rev-heading-div {
-                margin: 8px 0;
+                margin-top: 12px;
+                margin-bottom: 8px;
             }
-            
+
+            .rev-heading-large-div {
+                margin-top: 24px;
+                margin-bottom: 16px;
+            }
+
             .rev-counter-output {
                 font-size: 10pt; 
                 margin-right: 4%; 
                 margin-top: 4px; 
                 float: right;
+                color: #515366;
             }
 
             .rev-input {
                 color: #515366;
-                width: 92%; 
+                width: 92%;
                 margin-left: 4%;
+                font-size: 11pt !important;
+            }
+
+            .rev-input-table {
+                color: #515366;
+                width: 100%;
+                padding: 0;
+                margin: 10px 0;
+                font-size: 11pt !important;
             }
 
             .rev-heading-large {
@@ -59,43 +75,48 @@
             .rev-heading {
                 color: #515366;
                 font-family: sans-serif;
-                font-size: 11pt;
+                font-size: 12pt;
                 padding-left: 4%;
                 padding-top: 14px;
             }
+
         </style>
 
 
     </h:head>
     <h:body style="background-color: #f8f9fa;">
 
-        <div style="margin: 0 auto; max-width: 800px; border: 4px; border-style: solid; border-color: black">
+        <div style="margin: 0 auto; max-width: 800px;">
 
             <h:form id="myForm">
 
-                <div style="margin: 16px 0">
-                    <span class="rev-heading-large">PUBLICATION INFO</span>
+                <div class="rev-heading-large-div">
+                    <span class="rev-heading-large">PUBLICATION INFORMATION</span>
                 </div>
 
-                
-                    <div class="rev-heading-div">
-                        <span class="rev-heading">Title</span>
-                    </div>
-                    <div>
-                        <p:inputText
-                            class="rev-input"
-                            placeholder="Title"
-                            maxlength="50"/>
-                    </div>
-                
 
-                <span class="rev-heading">Publication Url</span>
-                <p:inputText 
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Title</span>
+                </div>
+                <div>
+                    <p:inputText
+                        class="rev-input"
+                        placeholder="Title"
+                        maxlength="50"/>
+                </div>
+
+
+                <div class="rev-heading-div">
+                    <span class="rev-heading">URL</span>
+                </div>
+                <p:inputText
                     placeholder="Url" 
                     class="rev-input" 
                     maxlength="100"/>
 
-                <span class="rev-heading">Summary</span>
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Summary</span>
+                </div>
                 <p:inputTextarea 
                     class="rev-input"
                     counter="summaryCounter"
@@ -111,23 +132,28 @@
 
 
 
+                <div class="rev-heading-large-div">
+                    <span class="rev-heading-large">REVIEW INFORMATION</span>
+                </div>
+
                 <!-- POSITIVES TABLE -->
-                <span class="rev-heading">Positives</span>
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Positives</span>
+                </div>
                 <p:dataTable id="positivesTable" 
                              editable="true"
-                             style="margin-top: 20px;"
+                             style="margin-top: 20px; margin-left: 4%; width: 92%;"
                              binding="#{positivesBinding}"
                              widgetVar="positivesTable" 
                              value="#{reviewBean.positives}"
-                             escapeText="false"
                              var="positive">
-                    <p:column style="width: 85%">
+                    <p:column style="width: 85%; padding: 0; background-color: #f8f9fa !important;">
                         <p:inputTextarea
-                            style="width: 100%"
+                            class="rev-input-table"
                             placeholder="Positive ##{positivesBinding.rowIndex + 1}" 
                             value="#{reviewBean.positives[positivesBinding.rowIndex]}"/>
                     </p:column>
-                    <p:column>
+                    <p:column style="width: 15%; background-color: #f8f9fa;">
                         <div align="center">
                             <p:commandButton 
                                 id="removePositive"
@@ -156,14 +182,15 @@
 
 
                 <!-- NEGATIVES TABLE -->
-                <h4 class="rev-heading">Negatives</h4>
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Negatives</span>
+                </div>
                 <p:dataTable id="negativesTable" 
                              editable="true"
                              binding="#{negativesBinding}"
                              widgetVar="negativesTable" 
                              value="#{reviewBean.negatives}" 
                              var="negative">
-                    <f:facet name="header">Negatives</f:facet>
                     <p:column>
                         <p:inputTextarea 
                             style="width: 100%; margin-right: 10px"
@@ -192,13 +219,14 @@
 
 
                 <!-- MAJOR POINTS TABLE -->
-                <h4 class="rev-heading">Major Points</h4>
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Major Points</span>
+                </div>
                 <p:dataTable id="majorPointsTable" 
                              editable="true"
                              binding="#{majorPointsBinding}"
                              widgetVar="majorPointsTable" 
                              value="#{reviewBean.majorPoints}" >
-                    <f:facet name="header">Major Points</f:facet>
                     <p:column>
                         <p:inputTextarea 
                             style="width: 100%; margin-right: 10px"
@@ -227,13 +255,14 @@
 
 
                 <!-- MINOR POINTS TABLE -->
-                <h4 class="rev-heading">Minor Points</h4>
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Minor Points</span>
+                </div>
                 <p:dataTable id="minorPointsTable" 
                              editable="true"
                              binding="#{minorPointsBinding}"
                              widgetVar="minorPointsTable" 
                              value="#{reviewBean.minorPoints}" >
-                    <f:facet name="header">Minor Points</f:facet>
                     <p:column>
                         <p:inputTextarea 
                             value="#{reviewBean.minorPoints[minorPointsBinding.rowIndex]}"
