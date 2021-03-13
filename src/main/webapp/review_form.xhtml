@@ -34,6 +34,9 @@
                     <p:outputLabel value="Summary"></p:outputLabel>
                     <p:inputTextarea placeholder="Write your summary here."></p:inputTextarea>
 
+
+
+                    <!-- POSITIVES TABLE -->
                     <p:dataTable id="positivesTable" 
                                  editable="true"
                                  binding="#{positivesBinding}"
@@ -42,28 +45,32 @@
                                  var="positive">
                         <f:facet name="header">Positives</f:facet>
                         <p:column>
-                            <p:inputTextarea 
+                            <p:inputTextarea
                                 style="width: 100%; margin-right: 10px"
                                 placeholder="Positive ##{positivesBinding.rowIndex + 1}" 
                                 value="#{reviewBean.positives[positivesBinding.rowIndex]}"/>
                         </p:column>
                         <p:column>
                             <p:commandButton 
-                                value="remove" 
+                                id="remove-positive"
+                                disabled="#{reviewBean.majorPoints.size() == 3}"
+                                value="remove"
                                 type="submit"
                                 actionListener="#{reviewBean.removePositiveAtIx(positivesBinding.rowIndex)}"
                                 update="positivesTable"
-                                process="@all"/>
+                                process="positivesTable"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
                         value="add"
                         type="submit"
-                        actionListener="#{reviewBean.addPositive()}" 
+                        actionListener="#{reviewBean.addPositive()}"
                         update="positivesTable"
-                        process="@all" />
+                        process="@this positivesTable"
+                        />
 
 
+                    <!-- NEGATIVES TABLE -->
                     <p:dataTable id="negativesTable" 
                                  editable="true"
                                  binding="#{negativesBinding}"
@@ -83,17 +90,18 @@
                                 type="submit"
                                 actionListener="#{reviewBean.removeNegativeAtIx(negativesBinding.rowIndex)}"
                                 update="negativesTable"
-                                process="@all"/>
+                                process="negativesTable"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
                         value="add"
                         type="submit"
                         actionListener="#{reviewBean.addNegative()}" 
-                        oncomplete="PF('negativesTable').addRow();" 
-                        process="@this" />
+                        update="negativesTable"
+                        process="@this negativesTable" />
 
 
+                    <!-- MAJOR POINTS TABLE -->
                     <p:dataTable id="majorPointsTable" 
                                  editable="true"
                                  binding="#{majorPointsBinding}"
@@ -112,16 +120,18 @@
                                 type="submit"
                                 actionListener="#{reviewBean.removeMajorPointAtIx(majorPointsBinding.rowIndex)}"
                                 update="majorPointsTable"
-                                process="@all"/>
+                                process="majorPointsTable"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
                         value="add"
                         type="submit"
                         actionListener="#{reviewBean.addMajorPoint()}" 
-                        oncomplete="PF('majorPointsTable').addRow();" 
-                        process="@this" />
+                        update="majorPointsTable"
+                        process="@this majorPointsTable" />
 
+
+                    <!-- MINOR POINTS TABLE -->
                     <p:dataTable id="minorPointsTable" 
                                  editable="true"
                                  binding="#{minorPointsBinding}"
@@ -139,18 +149,21 @@
                                 type="submit"
                                 actionListener="#{reviewBean.removeMinorPointAtIx(minorPointsBinding.rowIndex)}"
                                 update="minorPointsTable"
-                                process="@all"/>
+                                process="minorPointsTable"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
                         value="add"
                         type="submit"
                         actionListener="#{reviewBean.addMinorPoint()}" 
-                        oncomplete="PF('minorPointsTable').addRow();" 
-                        process="@this" />
+                        update="minorPointsTable"
+                        process="@this minorPointsTable"  />
+
 
                     <p:outputLabel value="Recommendation"></p:outputLabel>
-                    <p:selectOneMenu></p:selectOneMenu>
+<!--                    <p:selectOneMenu>
+                        <f:selectItems value="#{reviewBean.recommendations}"></f:selectItems>
+                    </p:selectOneMenu>-->
 
                     <p:outputLabel value="Reviewer Name"></p:outputLabel>
                     <p:inputText value="#{reviewBean.reviewerName}"/>
@@ -158,7 +171,7 @@
                     <p:commandButton 
                         value="Blah" 
                         type="submit"
-                        action="#{reviewBean.attemptReviewSubmission()}"/>
+                        actionListener="#{reviewBean.attemptReviewSubmission()}"/>
 
                 </h:panelGrid>
 

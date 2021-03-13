@@ -6,8 +6,11 @@
 package ca.csci483.myprojectname.controller;
 
 import ca.csci483.myprojectname.model.Publication;
+import ca.csci483.myprojectname.model.Recommendation;
 import ca.csci483.myprojectname.model.Review;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -22,9 +25,20 @@ public class ReviewBean implements Serializable {
     private Review review = new Review();
 
     public void attemptReviewSubmission() {
+        
+        System.out.println("attemptReviewSubmission called");
         System.out.println("Reviewer name: " + review.getReviewerName());
         for (String point : review.getMajorPoints()) {
-            System.out.println("point: " + point);
+            System.out.println("major: " + point);
+        }
+        for (String point : review.getMinorPoints()) {
+            System.out.println("minor: " + point);
+        }
+        for (String point : review.getPositives()) {
+            System.out.println("positive: " + point);
+        }
+        for (String point : review.getNegatives()) {
+            System.out.println("negative: " + point);
         }
     }
 
@@ -93,6 +107,10 @@ public class ReviewBean implements Serializable {
     public void removeNegativeAtIx(int ix) {
         review.getNegatives().remove(ix);
         System.out.println("REMOVED NEGATIVE at ix " + ix);
+    }
+    
+    public List<Recommendation> getRecommendations() {
+        return Arrays.asList(Recommendation.values());
     }
 
 }
