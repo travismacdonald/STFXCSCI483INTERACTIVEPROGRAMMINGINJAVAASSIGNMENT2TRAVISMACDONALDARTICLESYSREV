@@ -23,7 +23,7 @@
 
             <h:form>
 
-                <h:panelGrid style="height: 600px; width: 400px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
+                <h:panelGrid style="height: 600px; width: 800px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
 
                     <p:outputLabel style="margin: auto auto !important" value="Publication Title"></p:outputLabel>
                     <p:inputText style="margin: 0 20px" placeholder="Title"></p:inputText>
@@ -34,11 +34,65 @@
                     <p:outputLabel value="Summary"></p:outputLabel>
                     <p:inputTextarea placeholder="Write your summary here."></p:inputTextarea>
 
-                    <p:outputLabel value="Positives"></p:outputLabel>
+                    <p:dataTable id="positivesTable" 
+                                 editable="true"
+                                 binding="#{positivesBinding}"
+                                 widgetVar="positivesTable" 
+                                 value="#{reviewBean.positives}" 
+                                 var="positive">
+                        <f:facet name="header">Positives</f:facet>
+                        <p:column>
+                            <p:inputTextarea 
+                                style="width: 100%; margin-right: 10px"
+                                placeholder="Positive ##{positivesBinding.rowIndex + 1}" 
+                                value="#{reviewBean.positives[positivesBinding.rowIndex]}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton 
+                                value="remove" 
+                                type="submit"
+                                actionListener="#{reviewBean.removePositiveAtIx(positivesBinding.rowIndex)}"
+                                update="positivesTable"
+                                process="@this"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton 
+                        value="add"
+                        type="submit"
+                        actionListener="#{reviewBean.addPositive()}" 
+                        oncomplete="PF('positivesTable').addRow();" 
+                        process="@this" />
 
-                    <p:outputLabel value="Negitives"></p:outputLabel>
 
-                    <p:outputLabel value="Positives"></p:outputLabel>
+                    <p:dataTable id="negativesTable" 
+                                 editable="true"
+                                 binding="#{negativesBinding}"
+                                 widgetVar="negativesTable" 
+                                 value="#{reviewBean.negatives}" 
+                                 var="negative">
+                        <f:facet name="header">Negatives</f:facet>
+                        <p:column>
+                            <p:inputTextarea 
+                                style="width: 100%; margin-right: 10px"
+                                placeholder="Negative ##{negativesBinding.rowIndex + 1}" 
+                                value="#{reviewBean.negatives[negativesBinding.rowIndex]}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton 
+                                value="remove" 
+                                type="submit"
+                                actionListener="#{reviewBean.removeNegativeAtIx(negativesBinding.rowIndex)}"
+                                update="negativesTable"
+                                process="@this"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton 
+                        value="add"
+                        type="submit"
+                        actionListener="#{reviewBean.addPositive()}" 
+                        oncomplete="PF('negativesTable').addRow();" 
+                        process="@this" />
+
 
                     <p:dataTable id="majorPointsTable" 
                                  editable="true"
@@ -49,6 +103,7 @@
                         <f:facet name="header">Major Points</f:facet>
                         <p:column>
                             <p:inputTextarea 
+                                style="width: 100%; margin-right: 10px"
                                 placeholder="Major Point ##{majorPointsBinding.rowIndex + 1}" 
                                 value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"/>
                         </p:column>

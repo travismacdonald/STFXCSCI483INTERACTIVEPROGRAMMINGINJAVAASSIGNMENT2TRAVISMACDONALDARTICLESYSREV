@@ -15,11 +15,11 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
-@SessionScoped
+@ViewScoped
 @Named("reviewBean")
 public class ReviewBean implements Serializable {
 
-    private Review review = new Review();   
+    private Review review = new Review();
 
     public void attemptReviewSubmission() {
         System.out.println("Reviewer name: " + review.getReviewerName());
@@ -35,36 +35,64 @@ public class ReviewBean implements Serializable {
     public void setReviewerName(String reviewerName) {
         review.setReviewerName(reviewerName);
     }
-    
-    public void addMajorPoint() {
-        review.addMajorPoint();
-        System.out.println("addMajorPointCalled");
-    }
-    
-    public void removeMajorPointAtIx(int ix) {
-        review.getMajorPoints().remove(ix);
-        System.out.println("REMOVE: " + ix);
-    }
-    
+
     public List<String> getMajorPoints() {
         return review.getMajorPoints();
     }
-    
+
     public List<String> getMinorPoints() {
         return review.getMinorPoints();
     }
-    
+
+    public List<String> getPositives() {
+        return review.getPositives();
+    }
+
+    public List<String> getNegatives() {
+        return review.getNegatives();
+    }
+
+    public void addMajorPoint() {
+        review.getMajorPoints().add("");
+        System.out.println("addMajorPointCalled");
+    }
+
     public void addMinorPoint() {
         review.getMinorPoints().add("");
         System.out.println("addMinorPointCalled");
     }
-    
-    public void removeMinorPointAtIx(int ix) {
+
+    public void addPositive() {
+        review.getPositives().add("");
+        System.out.println("addPositiveCalled");
+    }
+
+    public void addNegative() {
+        review.getNegatives().add("");
+        System.out.println("addNegative called");
+    }
+
+    public void removeMajorPointAtIx(int ix) {
         for (String point : review.getMajorPoints()) {
-        
+            System.out.println("point: " + point);
         }
+        review.getMajorPoints().remove(ix);
+        System.out.println("REMOVE: " + ix);
+    }
+
+    public void removeMinorPointAtIx(int ix) {
         review.getMinorPoints().remove(ix);
         System.out.println("REMOVED MINOR POINT at ix " + ix);
+    }
+
+    public void removePositiveAtIx(int ix) {
+        review.getPositives().remove(ix);
+        System.out.println("REMOVED Positive at ix " + ix);
+    }
+
+    public void removeNegativeAtIx(int ix) {
+        review.getNegatives().remove(ix);
+        System.out.println("REMOVED NEGATIVE at ix " + ix);
     }
 
 }

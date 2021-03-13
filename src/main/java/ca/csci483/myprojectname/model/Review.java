@@ -10,42 +10,34 @@ public class Review implements Serializable {
     
     private Publication publication;
     
-    private String summary;
+    private String summary = "";
     
-    private List<String> positives;
+    private List<String> positives = new ArrayList(Arrays.asList(""));
     
-    private List<String> negatives;
+    private List<String> negatives = new ArrayList(Arrays.asList(""));
     
-    private List<String> majorPoints = new ArrayList(Arrays.asList("", "", ""));
+    private List<String> majorPoints = new ArrayList(Arrays.asList(""));
     
     private List<String> minorPoints = new ArrayList(Arrays.asList(""));
     
     private Recommendation recommendation;
     
-    private String reviewerName;
+    private String reviewerName = "";
 
     public List<String> getMajorPoints() {
         return majorPoints;
-    }
-    
-    public void setMajorPoints(List<String> majorPoints) {
-        this.majorPoints = majorPoints;
     }
     
     public List<String> getMinorPoints() {
         return minorPoints;
     }
     
-    public void addMajorPoint() {
-        majorPoints.add("");
+    public List<String> getPositives() {
+        return positives;
     }
     
-    public String getMajorPointAtIx(int ix) {
-        return majorPoints.get(ix);
-    }
-    
-    public void setMajorPointAtIx(int ix, String majorPoint) {
-        majorPoints.set(ix, majorPoint);
+    public List<String> getNegatives() {
+        return negatives;
     }
     
     public String getReviewerName() {
