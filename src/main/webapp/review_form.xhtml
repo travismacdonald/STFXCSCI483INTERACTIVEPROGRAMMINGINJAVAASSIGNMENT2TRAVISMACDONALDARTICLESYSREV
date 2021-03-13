@@ -25,8 +25,8 @@
 
                 <h:panelGrid id="myPanel" style="height: 600px; width: 800px; margin: 0 auto; border: 2px; border-style: solid" columns="1">
 
-                    <p:outputLabel style="margin: auto auto !important" value="Publication Title"></p:outputLabel>
-                    <p:inputText style="margin: 0 20px" placeholder="Title"></p:inputText>
+                    <p:outputLabel value="Publication Title"></p:outputLabel>
+                    <p:inputText placeholder="Title"></p:inputText>
 
                     <p:outputLabel value="Publication Url"></p:outputLabel>
                     <p:inputText placeholder="Url"></p:inputText>
@@ -87,20 +87,24 @@
                                 value="#{reviewBean.negatives[negativesBinding.rowIndex]}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton 
+                            <p:commandButton
+                                id="removeNegative"
                                 value="remove" 
                                 type="submit"
+                                disabled="#{reviewBean.minNegativesReached()}"
                                 actionListener="#{reviewBean.removeNegativeAtIx(negativesBinding.rowIndex)}"
-                                update="negativesTable"
-                                process="negativesTable"/>
+                                update="@this :myForm:addNegative negativesTable"
+                                process="@this :myForm:addNegative negativesTable"/>
                         </p:column>
                     </p:dataTable>
-                    <p:commandButton 
-                        value="add"
+                    <p:commandButton
+                        id="addNegative"
+                        value="Add Negative"
                         type="submit"
+                        disabled="#{reviewBean.maxNegativesReached()}"
                         actionListener="#{reviewBean.addNegative()}" 
-                        update="negativesTable"
-                        process="@this negativesTable" />
+                        update="@this myForm:negativesTable:removeNegative negativesTable"
+                        process="@this myForm:negativesTable:removeNegative negativesTable" />
 
 
                     <!-- MAJOR POINTS TABLE -->
@@ -117,20 +121,24 @@
                                 value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton 
+                            <p:commandButton
+                                id="removeMajorPoint"
                                 value="remove" 
                                 type="submit"
+                                disabled="#{reviewBean.minMajorPointsReached()}"
                                 actionListener="#{reviewBean.removeMajorPointAtIx(majorPointsBinding.rowIndex)}"
-                                update="majorPointsTable"
-                                process="majorPointsTable"/>
+                                update="@this :myForm:addMajorPoint majorPointsTable"
+                                process="@this :myForm:addMajorPoint majorPointsTable" />
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
-                        value="add"
+                        id="addMajorPoint"
+                        value="Add Major Point"
                         type="submit"
+                        disabled="#{reviewBean.maxMajorPointsReached()}"
                         actionListener="#{reviewBean.addMajorPoint()}" 
-                        update="majorPointsTable"
-                        process="@this majorPointsTable" />
+                        update="@this myForm:majorPointsTable:removeMajorPoint majorPointsTable"
+                        process="@this myForm:majorPointsTable:removeMajorPoint majorPointsTable"/>
 
 
                     <!-- MINOR POINTS TABLE -->
@@ -147,20 +155,23 @@
                         </p:column>
                         <p:column>
                             <p:commandButton 
+                                id="removeMinorPoint"
                                 value="remove" 
                                 type="submit"
+                                disabled="#{reviewBean.minMinorPointsReached()}"
                                 actionListener="#{reviewBean.removeMinorPointAtIx(minorPointsBinding.rowIndex)}"
-                                update="minorPointsTable"
-                                process="minorPointsTable"/>
+                                update="@this :myForm:addMinorPoint minorPointsTable"
+                                process="@this :myForm:addMinorPoint minorPointsTable"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton 
-                        value="add"
+                        id="addMinorPoint"
+                        value="Add Minor Point"
                         type="submit"
-                        
+                        disabled="#{reviewBean.maxMinorPointsReached()}"
                         actionListener="#{reviewBean.addMinorPoint()}" 
-                        update="minorPointsTable"
-                        process="@this minorPointsTable"  />
+                        update="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"
+                        process="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"/>
 
 
                     <p:outputLabel value="Recommendation"></p:outputLabel>
