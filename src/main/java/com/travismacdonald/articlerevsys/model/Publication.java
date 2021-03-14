@@ -2,23 +2,13 @@ package com.travismacdonald.articlerevsys.model;
 
 import java.io.Serializable;
 
-
 public class Publication implements Serializable {
 
     private String url;
-
     private String title;
 
-    public Publication(String url, String title) {
-        this.url = url;
+    public Publication(String title, String url) {
         this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -26,8 +16,8 @@ public class Publication implements Serializable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getUrl() {
+        return url;
     }
 
 }

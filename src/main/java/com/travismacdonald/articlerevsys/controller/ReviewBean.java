@@ -5,6 +5,8 @@
  */
 package com.travismacdonald.articlerevsys.controller;
 
+import com.travismacdonald.articlerevsys.model.ArsRepository;
+import com.travismacdonald.articlerevsys.model.Publication;
 import com.travismacdonald.articlerevsys.model.Recommendation;
 import com.travismacdonald.articlerevsys.model.Review;
 import com.travismacdonald.articlerevsys.utils.AsrConstants;
@@ -30,8 +32,6 @@ public class ReviewBean implements Serializable {
 
     private static final String REVIEW_MSG = "rev-msg";
 
-    private Review review = new Review();
-
     private String publicationTitle = "";
     private String publicationUrl = "";
     private String publicationSummary = "";
@@ -47,7 +47,9 @@ public class ReviewBean implements Serializable {
 
     public void attemptReviewSubmission() {
         if (validateSubmissionForm()) {
-            System.out.println("valid!");
+            showSubmissionError("nice", "nice");
+            final Review review = makeReview();
+            ArsRepository.getInstance().addReview(review);
         }
     }
 
@@ -300,7 +302,7 @@ public class ReviewBean implements Serializable {
         }
         return true;
     }
-    
+
     private boolean validateReviewerName() {
         if (reviewerName.isBlank()) {
             showSubmissionError(
@@ -332,6 +334,24 @@ public class ReviewBean implements Serializable {
             }
         }
         return nonBlank;
+    }
+
+    private Review makeReview() {
+        final Publication publication = new Publication(
+                publicationTitle,
+                publicationUrl
+        );
+        final Review review = new Review(
+                publication,
+                publicationSummary,
+                positives,
+                negatives,
+                majorPoints,
+                minorPoints,
+                recommendation,
+                reviewerName
+        );
+        return review;
     }
 
 }

@@ -2,6 +2,7 @@ package com.travismacdonald.articlerevsys.model;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,6 +54,26 @@ public class ArsRepository {
             close(result, dbStatement, dbConnection);
         }
         return null;
+    }
+
+    public boolean addReview(Review review) {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            final Publication publication = review.getPublication();
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            final String publicationInsertionString = String.format(
+                    "INSERT INTO Publication VALUES(0, '%s', '%s')",
+                    publication.getTitle(),
+                    publication.getUrl()
+            );
+            statement.executeUpdate(publicationInsertionString);
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return true;
     }
 
     private void connectToDataSource() {

@@ -1,51 +1,71 @@
 package com.travismacdonald.articlerevsys.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-
 public class Review implements Serializable {
-    
-    private Publication publication;
-    
-    private String summary = "";
-    
-    private List<String> positives = new ArrayList(Arrays.asList(""));
-    
-    private List<String> negatives = new ArrayList(Arrays.asList(""));
-    
-    private List<String> majorPoints = new ArrayList(Arrays.asList(""));
-    
-    private List<String> minorPoints = new ArrayList(Arrays.asList(""));
-    
-    private Recommendation recommendation;
-    
-    private String reviewerName = "";
+
+    private final Publication publication;
+    private final String summary;
+
+    private final List<String> positives;
+    private final List<String> negatives;
+    private final List<String> majorPoints;
+    private final List<String> minorPoints;
+
+    private final Recommendation recommendation;
+    private final String reviewerName;
+
+    public Review(
+            Publication publication,
+            String summary,
+            List<String> positives,
+            List<String> negatives,
+            List<String> majorPoints,
+            List<String> minorPoints,
+            Recommendation recommendation,
+            String reviewerName
+    ) {
+        this.publication = publication;
+        this.summary = summary;
+        this.positives = positives;
+        this.negatives = negatives;
+        this.majorPoints = majorPoints;
+        this.minorPoints = minorPoints;
+        this.recommendation = recommendation;
+        this.reviewerName = reviewerName;
+    }
+
+    public Publication getPublication() {
+        return publication;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
 
     public List<String> getMajorPoints() {
         return majorPoints;
     }
-    
+
     public List<String> getMinorPoints() {
         return minorPoints;
     }
-    
+
     public List<String> getPositives() {
         return positives;
     }
-    
+
     public List<String> getNegatives() {
         return negatives;
     }
-    
+
+    public Recommendation getRecommendation() {
+        return recommendation;
+    }
+
     public String getReviewerName() {
         return reviewerName;
     }
 
-    public void setReviewerName(String reviewerName) {
-        this.reviewerName = reviewerName;
-    }
-    
 }
