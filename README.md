@@ -9,12 +9,16 @@ An application for reviewing scientific articles. Provides two main functionalit
 
 This application contains some relatively arbitrary design decisions including:
 
-1. 2000 character limit on the summary field.
-2. A maximum of 5 points for each of major, minor, positive, and negative critiques.
-3. A minimum of 1 point for each of major, minor, positive, and negative critiques.
-4. A character limit of 500 for each of minor, positive, and negative critiques.
-5. A character limit of 1000 for major points.
-6. A max length of 100 characters for the publication title.
-7. A max length of 100 characters for the reviewer's name.
+| Field         | Character Limit (each) | Max Points | Min Points |
+| ------------- |:---------------:|:----------:|:----------:|
+| Title         | 100             | N/A        | N/A        |
+| URL           | 100             | N/A        | N/A        |
+| Summary       | 2000            | N/A        | N/A        |
+| Positives     | 500             | 5          | 1          |
+| Negatives     | 500             | 5          | 1          |
+| Major Points  | 500             | 5          | 1          |
+| Minor Points  | 1000            | 5          | 1          |
+| Reviewer Name | 100             | N/A        | N/A        |
+
 
 The reason for implemented this is to enforce *some* limit on the amount of information that a reviewer can upload. However, it should be noted that this application was designed so that these can be easily modified and/or removed (e.g. ArsConstants can be modified to change global behavior of the entire application).
