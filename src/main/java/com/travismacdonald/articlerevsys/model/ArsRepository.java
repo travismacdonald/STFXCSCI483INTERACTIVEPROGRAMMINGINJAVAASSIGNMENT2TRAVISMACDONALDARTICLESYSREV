@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +16,8 @@ import java.util.logging.Logger;
  * https://github.com/pijner/483_project/blob/main/project/src/main/java/com/gameofthreads/project/controller/DBConnector.java
  */
 public class ArsRepository {
+
+    private static final int AUTO_INCREMENT = 0;
 
     private static final String USER = "travism";
     private static final String PASSWORD = "myPassword123$";
@@ -64,23 +67,37 @@ public class ArsRepository {
             final Publication publication = review.getPublication();
             connection = dataSource.getConnection();
 
-            final String publicationInsertionString = String.format(
-                    "INSERT INTO Publication VALUES(0, '%s', '%s');",
-                    publication.getTitle(),
-                    publication.getUrl()
-            );
-            publicationStatement = connection.prepareStatement(
-                    publicationInsertionString,
+            String str2 = "INSERT INTO Publication VALUES(?, ?, ?);";
+            PreparedStatement query = connection.prepareStatement(
+                    str2,
                     Statement.RETURN_GENERATED_KEYS
             );
-            publicationStatement.executeUpdate();
-            ResultSet rs = publicationStatement.getGeneratedKeys();
+            query.setInt(1, AUTO_INCREMENT);
+            query.setString(2, publication.getTitle());
+            query.setString(3, publication.getUrl());
+            query.execute();
+
+            ResultSet rs = query.getGeneratedKeys();
             rs.next();
             int publicationId = rs.getInt(1);
             System.out.println("PUBLICATION ID: " + publicationId);
 
+//            final String publicationInsertionString = String.format(
+//                    "INSERT INTO Publication VALUES(0, '%s', '%s');",
+//                    publication.getTitle(),
+//                    publication.getUrl()
+//            );
+//            publicationStatement = connection.prepareStatement(
+//                    publicationInsertionString,
+//                    Statement.RETURN_GENERATED_KEYS
+//            );
+//            publicationStatement.executeUpdate();          
+//            ResultSet rs = publicationStatement.getGeneratedKeys();
+//            rs.next();
+//            int publicationId = rs.getInt(1);
+//            System.out.println("PUBLICATION ID: " + publicationId);
             rs.close();
-            publicationStatement.close();
+//            publicationStatement.close();
 
             final String reviewInsertionString = String.format(
                     "INSERT INTO Review VALUES(0, %d, '%s', '%s', '%s');",
@@ -101,8 +118,48 @@ public class ArsRepository {
 
             reviewStatement.close();
             rs.close();
-            
-            
+
+            Statement pointsStatement = connection.createStatement();
+            final List<String> pointsInsertionStrings = new ArrayList();
+            for (String pos : review.getPositives()) {
+                final String str = String.format(
+                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
+                        reviewId,
+                        pos,
+                        "pos"
+                );
+                pointsStatement.addBatch(str);
+            }
+            for (String ngt : review.getNegatives()) {
+                final String str = String.format(
+                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
+                        reviewId,
+                        ngt,
+                        "ngt"
+                );
+                pointsStatement.addBatch(str);
+            }
+            for (String maj : review.getMajorPoints()) {
+                final String str = String.format(
+                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
+                        reviewId,
+                        maj,
+                        "maj"
+                );
+                pointsStatement.addBatch(str);
+            }
+            for (String min : review.getMinorPoints()) {
+                final String str = String.format(
+                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
+                        reviewId,
+                        min,
+                        "min"
+                );
+                pointsStatement.addBatch(str);
+            }
+            pointsStatement.executeBatch();
+
+            pointsStatement.close();
 
             connection.close();
         } catch (SQLException ex) {
