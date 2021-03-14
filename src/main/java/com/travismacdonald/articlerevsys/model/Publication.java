@@ -6,10 +6,12 @@ public class Publication implements Serializable {
 
     private final String url;
     private final String title;
+    private int id;
 
-    public Publication(String title, String url) {
+    public Publication(String title, String url, int id) {
         this.title = title;
         this.url = url;
+        this.id = -1;
     }
 
     public String getTitle() {
@@ -18,6 +20,14 @@ public class Publication implements Serializable {
 
     public String getUrl() {
         return url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

@@ -15,6 +15,8 @@ public class Review implements Serializable {
 
     private final Recommendation recommendation;
     private final String reviewerName;
+    
+    private int id;
 
     public Review(
             Publication publication,
@@ -24,7 +26,8 @@ public class Review implements Serializable {
             List<String> majorPoints,
             List<String> minorPoints,
             Recommendation recommendation,
-            String reviewerName
+            String reviewerName,
+            int id
     ) {
         this.publication = publication;
         this.summary = summary;
@@ -34,6 +37,7 @@ public class Review implements Serializable {
         this.minorPoints = minorPoints;
         this.recommendation = recommendation;
         this.reviewerName = reviewerName;
+        this.id = id;
     }
 
     public Publication getPublication() {
@@ -66,6 +70,14 @@ public class Review implements Serializable {
 
     public String getReviewerName() {
         return reviewerName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

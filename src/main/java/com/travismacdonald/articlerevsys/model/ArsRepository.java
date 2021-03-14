@@ -60,112 +60,110 @@ public class ArsRepository {
     }
 
     public boolean addReview(Review review) {
-        Connection connection = null;
+        Connection conn = null;
         PreparedStatement publicationStatement = null;
         PreparedStatement reviewStatement = null;
         try {
+            conn = dataSource.getConnection();
+
             final Publication publication = review.getPublication();
-            connection = dataSource.getConnection();
-
-            String str2 = "INSERT INTO Publication VALUES(?, ?, ?);";
-            PreparedStatement query = connection.prepareStatement(
-                    str2,
-                    Statement.RETURN_GENERATED_KEYS
-            );
-            query.setInt(1, AUTO_INCREMENT);
-            query.setString(2, publication.getTitle());
-            query.setString(3, publication.getUrl());
-            query.execute();
-
-            ResultSet rs = query.getGeneratedKeys();
-            rs.next();
-            int publicationId = rs.getInt(1);
-            System.out.println("PUBLICATION ID: " + publicationId);
-
-//            final String publicationInsertionString = String.format(
-//                    "INSERT INTO Publication VALUES(0, '%s', '%s');",
-//                    publication.getTitle(),
-//                    publication.getUrl()
-//            );
-//            publicationStatement = connection.prepareStatement(
-//                    publicationInsertionString,
-//                    Statement.RETURN_GENERATED_KEYS
-//            );
-//            publicationStatement.executeUpdate();          
-//            ResultSet rs = publicationStatement.getGeneratedKeys();
-//            rs.next();
-//            int publicationId = rs.getInt(1);
-//            System.out.println("PUBLICATION ID: " + publicationId);
-            rs.close();
-//            publicationStatement.close();
-
-            final String reviewInsertionString = String.format(
-                    "INSERT INTO Review VALUES(0, %d, '%s', '%s', '%s');",
-                    publicationId,
-                    review.getSummary(),
-                    review.getRecommendation().name(),
-                    review.getReviewerName()
-            );
-            reviewStatement = connection.prepareStatement(
-                    reviewInsertionString,
-                    Statement.RETURN_GENERATED_KEYS
-            );
-            reviewStatement.executeUpdate();
-            rs = reviewStatement.getGeneratedKeys();
-            rs.next();
-            int reviewId = rs.getInt(1);
-            System.out.println("REVIEW ID: " + reviewId);
-
-            reviewStatement.close();
-            rs.close();
-
-            Statement pointsStatement = connection.createStatement();
-            final List<String> pointsInsertionStrings = new ArrayList();
-            for (String pos : review.getPositives()) {
-                final String str = String.format(
-                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
-                        reviewId,
-                        pos,
-                        "pos"
-                );
-                pointsStatement.addBatch(str);
-            }
-            for (String ngt : review.getNegatives()) {
-                final String str = String.format(
-                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
-                        reviewId,
-                        ngt,
-                        "ngt"
-                );
-                pointsStatement.addBatch(str);
-            }
-            for (String maj : review.getMajorPoints()) {
-                final String str = String.format(
-                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
-                        reviewId,
-                        maj,
-                        "maj"
-                );
-                pointsStatement.addBatch(str);
-            }
-            for (String min : review.getMinorPoints()) {
-                final String str = String.format(
-                        "INSERT INTO Point VALUES(0, %d, '%s', '%s');",
-                        reviewId,
-                        min,
-                        "min"
-                );
-                pointsStatement.addBatch(str);
-            }
-            pointsStatement.executeBatch();
-
-            pointsStatement.close();
-
-            connection.close();
+            insertPublication(conn, review.getPublication());
+            insertReview(conn, review);
+            insertPoints(conn, review);
+            conn.close();
+            
         } catch (SQLException ex) {
             Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
+    }
+
+    // Inserts Publication into database and updates its ID to the generated value 
+    // from the database
+    private void insertPublication(Connection conn, Publication publication)
+            throws SQLException {
+        String publicationQueryStr = "INSERT INTO Publication VALUES(?, ?, ?);";
+        PreparedStatement publicationQuery = conn.prepareStatement(
+                publicationQueryStr,
+                Statement.RETURN_GENERATED_KEYS
+        );
+
+        publicationQuery.setInt(1, AUTO_INCREMENT);
+        publicationQuery.setString(2, publication.getTitle());
+        publicationQuery.setString(3, publication.getUrl());
+        publicationQuery.execute();
+
+        // Get generated publication ID
+        ResultSet rs = publicationQuery.getGeneratedKeys();
+        rs.next();
+        final int publicationId = rs.getInt(1);
+        publication.setId(publicationId);
+        publicationQuery.close();
+        rs.close();
+    }
+
+    // Inserts Review into database and updates its ID to the generated value 
+    // from the database
+    private void insertReview(Connection conn, Review review)
+            throws SQLException {
+        String reviewQueryStr = "INSERT INTO Review VALUES(?, ?, ?, ?, ?);";
+        PreparedStatement reviewQuery = conn.prepareStatement(
+                reviewQueryStr,
+                Statement.RETURN_GENERATED_KEYS
+        );
+        reviewQuery.setInt(1, AUTO_INCREMENT);
+        reviewQuery.setInt(2, review.getPublication().getId());
+        reviewQuery.setString(3, review.getSummary());
+        reviewQuery.setString(4, review.getRecommendation().name());
+        reviewQuery.setString(5, review.getReviewerName());
+        reviewQuery.execute();
+
+        // Get generated review ID
+        final ResultSet rs = reviewQuery.getGeneratedKeys();
+        rs.next();
+        final int reviewId = rs.getInt(1);
+        review.setId(reviewId);
+        reviewQuery.close();
+        rs.close();
+    }
+
+    private void insertPoints(Connection conn, Review review)
+            throws SQLException {
+
+        final String pointsQueryStr = "INSERT INTO Point VALUES(?, ?, ?, ?);";
+        final PreparedStatement pointsQuery = conn.prepareStatement(pointsQueryStr);
+        
+        for (String pos : review.getPositives()) {
+            pointsQuery.setInt(1, AUTO_INCREMENT);
+            pointsQuery.setInt(2, review.getId());
+            pointsQuery.setString(3, pos);
+            pointsQuery.setString(4, "pos");
+            pointsQuery.addBatch();
+        }
+        for (String ngt : review.getNegatives()) {
+            pointsQuery.setInt(1, AUTO_INCREMENT);
+            pointsQuery.setInt(2, review.getId());
+            pointsQuery.setString(3, ngt);
+            pointsQuery.setString(4, "ngt");
+            pointsQuery.addBatch();
+        }
+        for (String maj : review.getMajorPoints()) {
+            pointsQuery.setInt(1, AUTO_INCREMENT);
+            pointsQuery.setInt(2, review.getId());
+            pointsQuery.setString(3, maj);
+            pointsQuery.setString(4, "maj");
+            pointsQuery.addBatch();
+        }
+        for (String min : review.getMinorPoints()) {
+            pointsQuery.setInt(1, AUTO_INCREMENT);
+            pointsQuery.setInt(2, review.getId());
+            pointsQuery.setString(3, min);
+            pointsQuery.setString(4, "min");
+            pointsQuery.addBatch();
+        }
+        
+        pointsQuery.executeBatch();
+        pointsQuery.close();
     }
 
     private void connectToDataSource() {
