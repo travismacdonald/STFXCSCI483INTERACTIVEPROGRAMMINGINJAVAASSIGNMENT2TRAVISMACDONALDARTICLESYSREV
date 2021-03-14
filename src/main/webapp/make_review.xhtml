@@ -137,8 +137,9 @@
                     <span class="rev-heading">URL</span>
                 </div>
                 <p:inputText
-                    placeholder="Url" 
-                    class="rev-input" 
+                    placeholder="Url"
+                    class="rev-input"
+                    value="#{reviewBean.publicationUrl}"
                     maxlength="100"/>
 
                 <div class="rev-heading-div">
@@ -147,6 +148,7 @@
                 <p:inputTextarea 
                     class="rev-input"
                     counter="summaryCounter"
+                    value="#{reviewBean.publicationSummary}"
                     counterTemplate="{0} characters remaining."
                     placeholder="Write your summary here." 
                     maxlength="2000"
