@@ -37,7 +37,7 @@
 
             .rev-heading-large-div {
                 margin-top: 48px;
-                margin-bottom: 16px;
+                margin-bottom: 24px;
             }
 
             .rev-counter-output {
@@ -59,7 +59,7 @@
                 margin-top: 48px;
                 margin-bottom: 8px;
             }
-            
+
             .rev-input-table {
                 color: #515366;
                 width: 100%;
@@ -90,13 +90,14 @@
                 width: 92%;
             }
 
-                    
+
             .rev-add-button{
                 width: 180px;
                 font-size: 11pt !important;
                 margin: 0 auto;
             }
-</style>
+
+        </style>
 
 
     </h:head>
@@ -166,13 +167,14 @@
                         <p:inputTextarea
                             class="rev-input-table"
                             placeholder="Positive ##{positivesBinding.rowIndex + 1}" 
-                            value="#{reviewBean.positives[positivesBinding.rowIndex]}"/>
+                            value="#{reviewBean.positives[positivesBinding.rowIndex]}"
+                            maxlength="500" />
                     </p:column>
                     <p:column style="width: 15%; background-color: #f8f9fa;">
                         <div align="center">
                             <p:commandButton 
                                 id="removePositive"
-                                icon="pi pi-times" 
+                                icon="pi pi-minus" 
                                 styleClass="rounded-button ui-button-danger"
                                 disabled="#{reviewBean.minPositivesReached()}"
                                 type="submit"
@@ -185,9 +187,9 @@
                 <div align="center" style="margin: 8px;">
                     <p:commandButton 
                         id="addPositive"
-                        value="Add Positive"
                         type="submit"
-                        class="rev-add-button"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
                         disabled="#{reviewBean.maxPositivesReached()}"
                         actionListener="#{reviewBean.addPositive()}"
                         update="@this myForm:positivesTable:removePositive positivesTable"
@@ -210,13 +212,14 @@
                         <p:inputTextarea 
                             class="rev-input-table"
                             placeholder="Negative ##{negativesBinding.rowIndex + 1}" 
-                            value="#{reviewBean.negatives[negativesBinding.rowIndex]}"/>
+                            value="#{reviewBean.negatives[negativesBinding.rowIndex]}"
+                            maxlength="500"/>
                     </p:column>
                     <p:column style="width: 15%; background-color: #f8f9fa;">
                         <div align="center">
                             <p:commandButton
                                 id="removeNegative"
-                                icon="pi pi-times" 
+                                icon="pi pi-minus" 
                                 styleClass="rounded-button ui-button-danger"
                                 type="submit"
                                 disabled="#{reviewBean.minNegativesReached()}"
@@ -229,9 +232,9 @@
                 <div align="center" style="margin: 8px;">
                     <p:commandButton
                         id="addNegative"
-                        value="Add Negative"
                         type="submit"
-                        class="rev-add-button"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
                         disabled="#{reviewBean.maxNegativesReached()}"
                         actionListener="#{reviewBean.addNegative()}" 
                         update="@this myForm:negativesTable:removeNegative negativesTable"
@@ -252,13 +255,14 @@
                         <p:inputTextarea 
                             class="rev-input-table"
                             placeholder="Major Point ##{majorPointsBinding.rowIndex + 1}" 
-                            value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"/>
+                            value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"
+                            maxlength="1000"/>
                     </p:column>
                     <p:column style="width: 15%; background-color: #f8f9fa;">
                         <div align="center">
                             <p:commandButton
                                 id="removeMajorPoint"
-                                icon="pi pi-times" 
+                                icon="pi pi-minus"
                                 styleClass="rounded-button ui-button-danger"
                                 type="submit"
                                 disabled="#{reviewBean.minMajorPointsReached()}"
@@ -271,9 +275,9 @@
                 <div align="center" style="margin: 8px;">
                     <p:commandButton 
                         id="addMajorPoint"
-                        value="Add Major Point"
                         type="submit"
-                        class="rev-add-button"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
                         disabled="#{reviewBean.maxMajorPointsReached()}"
                         actionListener="#{reviewBean.addMajorPoint()}" 
                         update="@this myForm:majorPointsTable:removeMajorPoint majorPointsTable"
@@ -294,13 +298,14 @@
                         <p:inputTextarea
                             class="rev-input-table"
                             value="#{reviewBean.minorPoints[minorPointsBinding.rowIndex]}"
-                            placeholder="Minor Point ##{minorPointsBinding.rowIndex + 1}"/>
+                            placeholder="Minor Point ##{minorPointsBinding.rowIndex + 1}"
+                            maxlength="500"/>
                     </p:column>
                     <p:column style="width: 15%; background-color: #f8f9fa;">
                         <div align="center">
                             <p:commandButton 
                                 id="removeMinorPoint"
-                                icon="pi pi-times" 
+                                icon="pi pi-minus"
                                 styleClass="rounded-button ui-button-danger"
                                 type="submit"
                                 disabled="#{reviewBean.minMinorPointsReached()}"
@@ -313,30 +318,41 @@
                 <div align="center" style="margin: 8px;">
                     <p:commandButton 
                         id="addMinorPoint"
-                        value="Add Minor Point"
                         type="submit"
-                        class="rev-add-button"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
                         disabled="#{reviewBean.maxMinorPointsReached()}"
                         actionListener="#{reviewBean.addMinorPoint()}" 
                         update="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"
                         process="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"/>
                 </div>
 
-                <h4 class="rev-heading">Recommendation</h4>
+                <div class="rev-heading-large-div">
+                    <span class="rev-heading-large">REVIEWER INFORMATION</span>
+                </div>
+
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Recommendation</span>
+                </div>
                 <p:selectOneMenu value="#{reviewBean.recommendation}">
                     <f:selectItems value="#{reviewBean.recommendations}"></f:selectItems>
                 </p:selectOneMenu>
 
 
-                <h4 class="rev-heading">Reviewer Name</h4>
-                <p:inputText value="#{reviewBean.reviewerName}"/>
 
-                <br/>
-                <p:commandButton 
-                    value="Blah" 
-                    type="submit"
-                    actionListener="#{reviewBean.attemptReviewSubmission()}"/>
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Reviewer Name</span>
+                </div>
+                <p:inputText class="rev-input" value="#{reviewBean.reviewerName}"/>
 
+                <div style="margin: 80px 0;" align="center">
+                    <p:commandButton 
+                        style="height: 120px; font-size: 13pt !important"
+                        value="Submit Review" 
+                        type="submit"
+                        styleClass="rounded-button"
+                        actionListener="#{reviewBean.attemptReviewSubmission()}"/>
+                </div>
 
 
             </h:form>
