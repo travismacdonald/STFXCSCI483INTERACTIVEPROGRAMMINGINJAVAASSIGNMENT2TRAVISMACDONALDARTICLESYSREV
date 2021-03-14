@@ -14,9 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.faces.view.facelets.FaceletContext;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
@@ -24,25 +26,19 @@ import javax.persistence.Enumerated;
 @Named("reviewBean")
 public class ReviewBean implements Serializable {
 
+    private static final String REVIEW_MSG = "rev-msg";
+
     private Review review = new Review();
 
-    public void attemptReviewSubmission() {
+    private String publicationTitle = "";
 
-        System.out.println("attemptReviewSubmission called");
-        System.out.println("Reviewer name: " + review.getReviewerName());
-        for (String point : review.getMajorPoints()) {
-            System.out.println("major: " + point);
+    private String publicationUrl = "";
+
+    public void attemptReviewSubmission() {
+        if (validateSubmissionForm()) {
+            System.out.println("valid!");
         }
-        for (String point : review.getMinorPoints()) {
-            System.out.println("minor: " + point);
-        }
-        for (String point : review.getPositives()) {
-            System.out.println("positive: " + point);
-        }
-        for (String point : review.getNegatives()) {
-            System.out.println("negative: " + point);
-        }
-        System.out.println("Rec: " + recommendation);
+
     }
 
     public String getReviewerName() {
@@ -67,6 +63,22 @@ public class ReviewBean implements Serializable {
 
     public List<String> getNegatives() {
         return review.getNegatives();
+    }
+
+    public String getPublicationTitle() {
+        return publicationTitle;
+    }
+
+    public void setPublicationTitle(String title) {
+        this.publicationTitle = title;
+    }
+
+    public String getPublicationUrl() {
+        return publicationUrl;
+    }
+
+    public void setPublicationUrl(String publicationUrl) {
+        this.publicationUrl = publicationUrl;
     }
 
     public void addMajorPoint() {
@@ -112,7 +124,7 @@ public class ReviewBean implements Serializable {
         review.getNegatives().remove(total - 1);
         System.out.println("REMOVED negatives");
     }
-    
+
     public List<Recommendation> getRecommendations() {
         return Arrays.asList(Recommendation.values());
     }
@@ -158,6 +170,40 @@ public class ReviewBean implements Serializable {
 
     public boolean minNegativesReached() {
         return review.getNegatives().size() <= AsrConstants.MIN_NEGATIVES;
+    }
+    
+    private boolean validateSubmissionForm() {
+        // Return res, instead of returning false in each statment,
+        // so multiple errors can be logged at once (e.g. no title and no url).
+        boolean res = true;
+        if (publicationTitle.isBlank()) {
+            showSubmissionError(
+                    "Submission Error", 
+                    "No publication title provided."
+            );
+            res = false;
+        } 
+        if (publicationUrl.isBlank()) {
+            showSubmissionError(
+                    "Submission Error",
+                    "No publication URL provided."
+            );
+            res = false;
+        }
+        
+        return res;
+    }
+
+    private void showSubmissionError(String summary, String details) {
+        FacesMessage msg = new FacesMessage(
+                FacesMessage.SEVERITY_ERROR,
+                summary,
+                details
+        );
+        FacesContext.getCurrentInstance().addMessage(
+                REVIEW_MSG,
+                msg
+        );
     }
 
 }

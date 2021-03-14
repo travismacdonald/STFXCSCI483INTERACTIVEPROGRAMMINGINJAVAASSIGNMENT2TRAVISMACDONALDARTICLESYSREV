@@ -65,7 +65,6 @@
             .rev-input-table {
                 color: #515366;
                 width: 100%;
-                padding: 0;
                 margin: 10px 0;
                 font-size: 11pt !important;
             }
@@ -107,12 +106,16 @@
 
         <div style="margin: 0 auto; max-width: 800px;">
 
+            <p:growl id="rev-msg" showSummary="true" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
+
             <h:form id="myForm">
 
                 <div style="margin-top: 48px;" align="center">
                     <h1>Make a Review</h1>
                 </div>
-                
+
                 <div class="rev-heading-large-div">
                     <span class="rev-heading-large">PUBLICATION INFORMATION</span>
                 </div>
@@ -124,6 +127,7 @@
                 <div>
                     <p:inputText
                         class="rev-input"
+                        value="#{reviewBean.publicationTitle}"
                         placeholder="Title"
                         maxlength="100"/>
                 </div>
@@ -348,7 +352,9 @@
                         value="Submit Review" 
                         type="submit"
                         styleClass="rounded-button ui-button-success"
-                        actionListener="#{reviewBean.attemptReviewSubmission()}"/>
+                        actionListener="#{reviewBean.attemptReviewSubmission()}">
+                        
+                    </p:commandButton>
                 </div>
 
 
