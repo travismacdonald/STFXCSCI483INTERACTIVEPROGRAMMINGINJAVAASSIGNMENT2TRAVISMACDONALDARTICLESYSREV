@@ -16,8 +16,8 @@ This application contains some relatively arbitrary design decisions including:
 | Summary       | 2000            | N/A        | N/A        |
 | Positives     | 500             | 5          | 1          |
 | Negatives     | 500             | 5          | 1          |
-| Major Points  | 500             | 5          | 1          |
-| Minor Points  | 1000            | 5          | 1          |
+| Major Points  | 1000            | 5          | 1          |
+| Minor Points  | 500             | 5          | 1          |
 | Reviewer Name | 100             | N/A        | N/A        |
 
 
