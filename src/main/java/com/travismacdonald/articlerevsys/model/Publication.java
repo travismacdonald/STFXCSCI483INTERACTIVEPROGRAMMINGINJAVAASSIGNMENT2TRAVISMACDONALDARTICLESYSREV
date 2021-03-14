@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Publication implements Serializable {
 
-    private String url;
-    private String title;
+    private final String url;
+    private final String title;
 
     public Publication(String title, String url) {
         this.title = title;

@@ -58,21 +58,56 @@ public class ArsRepository {
 
     public boolean addReview(Review review) {
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement publicationStatement = null;
+        PreparedStatement reviewStatement = null;
         try {
             final Publication publication = review.getPublication();
             connection = dataSource.getConnection();
-            statement = connection.createStatement();
+
             final String publicationInsertionString = String.format(
-                    "INSERT INTO Publication VALUES(0, '%s', '%s')",
+                    "INSERT INTO Publication VALUES(0, '%s', '%s');",
                     publication.getTitle(),
                     publication.getUrl()
             );
-            statement.executeUpdate(publicationInsertionString);
+            publicationStatement = connection.prepareStatement(
+                    publicationInsertionString,
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            publicationStatement.executeUpdate();
+            ResultSet rs = publicationStatement.getGeneratedKeys();
+            rs.next();
+            int publicationId = rs.getInt(1);
+            System.out.println("PUBLICATION ID: " + publicationId);
+
+            rs.close();
+            publicationStatement.close();
+
+            final String reviewInsertionString = String.format(
+                    "INSERT INTO Review VALUES(0, %d, '%s', '%s', '%s');",
+                    publicationId,
+                    review.getSummary(),
+                    review.getRecommendation().name(),
+                    review.getReviewerName()
+            );
+            reviewStatement = connection.prepareStatement(
+                    reviewInsertionString,
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            reviewStatement.executeUpdate();
+            rs = reviewStatement.getGeneratedKeys();
+            rs.next();
+            int reviewId = rs.getInt(1);
+            System.out.println("REVIEW ID: " + reviewId);
+
+            reviewStatement.close();
+            rs.close();
+            
+            
+
             connection.close();
         } catch (SQLException ex) {
             Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return true;
     }
 
