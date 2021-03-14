@@ -55,6 +55,8 @@
                 font-size: 11pt !important;
             }
 
+
+
             .rev-table-header {
                 margin-top: 48px;
                 margin-bottom: 8px;
@@ -170,31 +172,29 @@
                             value="#{reviewBean.positives[positivesBinding.rowIndex]}"
                             maxlength="500" />
                     </p:column>
-                    <p:column style="width: 15%; background-color: #f8f9fa;">
-                        <div align="center">
-                            <p:commandButton 
-                                id="removePositive"
-                                icon="pi pi-minus" 
-                                styleClass="rounded-button ui-button-danger"
-                                disabled="#{reviewBean.minPositivesReached()}"
-                                type="submit"
-                                actionListener="#{reviewBean.removePositiveAtIx(positivesBinding.rowIndex)}"
-                                update="@this :myForm:addPositive positivesTable"
-                                process="@this :myForm:addPositive positivesTable"/>
-                        </div>
-                    </p:column>
                 </p:dataTable>
                 <div align="center" style="margin: 8px;">
                     <p:commandButton 
                         id="addPositive"
                         type="submit"
+                        style="margin-right: 8px;"
                         styleClass="rounded-button"
                         icon="pi pi-plus"
                         disabled="#{reviewBean.maxPositivesReached()}"
                         actionListener="#{reviewBean.addPositive()}"
-                        update="@this myForm:positivesTable:removePositive positivesTable"
-                        process="@this myForm:positivesTable:removePositive positivesTable"
+                        update="@this removePositive positivesTable"
+                        process="@this removePositive positivesTable"
                         />
+                    <p:commandButton 
+                        id="removePositive"
+                        icon="pi pi-minus"
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        disabled="#{reviewBean.minPositivesReached()}"
+                        type="submit"
+                        actionListener="#{reviewBean.removePositive()}"
+                        update="@this addPositive positivesTable"
+                        process="@this addPositive positivesTable"/>
                 </div>
 
 
@@ -215,30 +215,28 @@
                             value="#{reviewBean.negatives[negativesBinding.rowIndex]}"
                             maxlength="500"/>
                     </p:column>
-                    <p:column style="width: 15%; background-color: #f8f9fa;">
-                        <div align="center">
-                            <p:commandButton
-                                id="removeNegative"
-                                icon="pi pi-minus" 
-                                styleClass="rounded-button ui-button-danger"
-                                type="submit"
-                                disabled="#{reviewBean.minNegativesReached()}"
-                                actionListener="#{reviewBean.removeNegativeAtIx(negativesBinding.rowIndex)}"
-                                update="@this :myForm:addNegative negativesTable"
-                                process="@this :myForm:addNegative negativesTable"/>
-                        </div>
-                    </p:column>
                 </p:dataTable>
                 <div align="center" style="margin: 8px;">
                     <p:commandButton
                         id="addNegative"
                         type="submit"
+                        style="margin-right: 8px;"
                         styleClass="rounded-button"
                         icon="pi pi-plus"
                         disabled="#{reviewBean.maxNegativesReached()}"
                         actionListener="#{reviewBean.addNegative()}" 
-                        update="@this myForm:negativesTable:removeNegative negativesTable"
-                        process="@this myForm:negativesTable:removeNegative negativesTable" />
+                        update="@this removeNegative negativesTable"
+                        process="@this removeNegative negativesTable" />
+                    <p:commandButton
+                        id="removeNegative"
+                        icon="pi pi-minus" 
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        type="submit"
+                        disabled="#{reviewBean.minNegativesReached()}"
+                        actionListener="#{reviewBean.removeNegative()}"
+                        update="@this addNegative negativesTable"
+                        process="@this addNegative negativesTable"/>
                 </div>
 
                 <!-- MAJOR POINTS TABLE -->
@@ -258,30 +256,28 @@
                             value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"
                             maxlength="1000"/>
                     </p:column>
-                    <p:column style="width: 15%; background-color: #f8f9fa;">
-                        <div align="center">
-                            <p:commandButton
-                                id="removeMajorPoint"
-                                icon="pi pi-minus"
-                                styleClass="rounded-button ui-button-danger"
-                                type="submit"
-                                disabled="#{reviewBean.minMajorPointsReached()}"
-                                actionListener="#{reviewBean.removeMajorPointAtIx(majorPointsBinding.rowIndex)}"
-                                update="@this :myForm:addMajorPoint majorPointsTable"
-                                process="@this :myForm:addMajorPoint majorPointsTable" />
-                        </div>
-                    </p:column>
                 </p:dataTable>
                 <div align="center" style="margin: 8px;">
                     <p:commandButton 
                         id="addMajorPoint"
                         type="submit"
+                        style="margin-right: 8px;"
                         styleClass="rounded-button"
                         icon="pi pi-plus"
                         disabled="#{reviewBean.maxMajorPointsReached()}"
                         actionListener="#{reviewBean.addMajorPoint()}" 
-                        update="@this myForm:majorPointsTable:removeMajorPoint majorPointsTable"
-                        process="@this myForm:majorPointsTable:removeMajorPoint majorPointsTable"/>
+                        update="@this removeMajorPoint majorPointsTable"
+                        process="@this removeMajorPoint majorPointsTable"/>
+                    <p:commandButton
+                        id="removeMajorPoint"
+                        icon="pi pi-minus"
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        type="submit"
+                        disabled="#{reviewBean.minMajorPointsReached()}"
+                        actionListener="#{reviewBean.removeMajorPoint()}"
+                        update="@this addMajorPoint majorPointsTable"
+                        process="@this addMajorPoint majorPointsTable" />
                 </div>
 
                 <!-- MINOR POINTS TABLE -->
@@ -301,30 +297,28 @@
                             placeholder="Minor Point ##{minorPointsBinding.rowIndex + 1}"
                             maxlength="500"/>
                     </p:column>
-                    <p:column style="width: 15%; background-color: #f8f9fa;">
-                        <div align="center">
-                            <p:commandButton 
-                                id="removeMinorPoint"
-                                icon="pi pi-minus"
-                                styleClass="rounded-button ui-button-danger"
-                                type="submit"
-                                disabled="#{reviewBean.minMinorPointsReached()}"
-                                actionListener="#{reviewBean.removeMinorPointAtIx(minorPointsBinding.rowIndex)}"
-                                update="@this :myForm:addMinorPoint minorPointsTable"
-                                process="@this :myForm:addMinorPoint minorPointsTable"/>
-                        </div>
-                    </p:column>
                 </p:dataTable>
                 <div align="center" style="margin: 8px;">
                     <p:commandButton 
                         id="addMinorPoint"
                         type="submit"
+                        style="margin-right: 8px;"
                         styleClass="rounded-button"
                         icon="pi pi-plus"
                         disabled="#{reviewBean.maxMinorPointsReached()}"
                         actionListener="#{reviewBean.addMinorPoint()}" 
-                        update="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"
-                        process="@this myForm:minorPointsTable:removeMinorPoint minorPointsTable"/>
+                        update="@this removeMinorPoint minorPointsTable"
+                        process="@this removeMinorPoint minorPointsTable"/>
+                    <p:commandButton 
+                        id="removeMinorPoint"
+                        icon="pi pi-minus"
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        type="submit"
+                        disabled="#{reviewBean.minMinorPointsReached()}"
+                        actionListener="#{reviewBean.removeMinorPoint()}"
+                        update="@this addMinorPoint minorPointsTable"
+                        process="@this addMinorPoint minorPointsTable"/>
                 </div>
 
                 <div class="rev-heading-large-div">
@@ -334,23 +328,22 @@
                 <div class="rev-heading-div">
                     <span class="rev-heading">Recommendation</span>
                 </div>
-                <p:selectOneMenu value="#{reviewBean.recommendation}">
+                <p:selectOneMenu class="rev-input" value="#{reviewBean.recommendation}">
                     <f:selectItems value="#{reviewBean.recommendations}"></f:selectItems>
                 </p:selectOneMenu>
-
 
 
                 <div class="rev-heading-div">
                     <span class="rev-heading">Reviewer Name</span>
                 </div>
-                <p:inputText class="rev-input" value="#{reviewBean.reviewerName}"/>
+                <p:inputText maxlength="100" class="rev-input" value="#{reviewBean.reviewerName}"/>
 
                 <div style="margin: 80px 0;" align="center">
                     <p:commandButton 
-                        style="height: 120px; font-size: 13pt !important"
+                        style="height: 80px; font-size: 16pt !important; font-weight: bold;"
                         value="Submit Review" 
                         type="submit"
-                        styleClass="rounded-button"
+                        styleClass="rounded-button ui-button-success"
                         actionListener="#{reviewBean.attemptReviewSubmission()}"/>
                 </div>
 

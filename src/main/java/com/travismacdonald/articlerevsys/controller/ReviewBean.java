@@ -5,7 +5,6 @@
  */
 package com.travismacdonald.articlerevsys.controller;
 
-
 import com.travismacdonald.articlerevsys.model.Recommendation;
 import com.travismacdonald.articlerevsys.model.Review;
 import com.travismacdonald.articlerevsys.utils.AsrConstants;
@@ -90,29 +89,30 @@ public class ReviewBean implements Serializable {
         System.out.println("addNegative called");
     }
 
-    public void removeMajorPointAtIx(int ix) {
-        for (String point : review.getMajorPoints()) {
-            System.out.println("point: " + point);
-        }
-        review.getMajorPoints().remove(ix);
-        System.out.println("REMOVE: " + ix);
+    public void removeMajorPoint() {
+        int total = review.getMajorPoints().size();
+        review.getMajorPoints().remove(total - 1);
+        System.out.println("REMOVED major");
     }
 
-    public void removeMinorPointAtIx(int ix) {
-        review.getMinorPoints().remove(ix);
-        System.out.println("REMOVED MINOR POINT at ix " + ix);
+    public void removeMinorPoint() {
+        int total = review.getMinorPoints().size();
+        review.getMinorPoints().remove(total - 1);
+        System.out.println("REMOVED minor");
     }
 
-    public void removePositiveAtIx(int ix) {
-        review.getPositives().remove(ix);
-        System.out.println("REMOVED Positive at ix " + ix);
+    public void removePositive() {
+        int total = review.getPositives().size();
+        review.getPositives().remove(total - 1);
+        System.out.println("REMOVED Positive");
     }
 
-    public void removeNegativeAtIx(int ix) {
-        review.getNegatives().remove(ix);
-        System.out.println("REMOVED NEGATIVE at ix " + ix);
+    public void removeNegative() {
+        int total = review.getNegatives().size();
+        review.getNegatives().remove(total - 1);
+        System.out.println("REMOVED negatives");
     }
-
+    
     public List<Recommendation> getRecommendations() {
         return Arrays.asList(Recommendation.values());
     }
