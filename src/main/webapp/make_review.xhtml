@@ -1,0 +1,362 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Review a Publication</title>
+        <style type="text/css">
+
+            div[id="myForm:positivesTable"] thead {
+                display:none;
+            }
+            div[id="myForm:negativesTable"] thead {
+                display:none;
+            }
+            div[id="myForm:majorPointsTable"] thead {
+                display:none;
+            }
+            div[id="myForm:minorPointsTable"] thead {
+                display:none;
+            }
+
+            ::-webkit-input-placeholder {
+                color: #BBBBBB !important; 
+            }
+
+            ::-moz-placeholder { 
+                color: #BBBBBB !important; 
+            }
+
+            .rev-heading-div {
+                margin-top: 12px;
+                margin-bottom: 8px;
+            }
+
+            .rev-heading-large-div {
+                margin-top: 48px;
+                margin-bottom: 24px;
+            }
+
+            .rev-counter-output {
+                font-size: 10pt; 
+                margin-right: 4%; 
+                margin-top: 4px; 
+                float: right;
+                color: #515366;
+            }
+
+            .rev-input {
+                color: #515366;
+                width: 92%;
+                margin-left: 4%;
+                font-size: 11pt !important;
+            }
+
+
+
+            .rev-table-header {
+                margin-top: 48px;
+                margin-bottom: 8px;
+            }
+
+            .rev-input-table {
+                color: #515366;
+                width: 100%;
+                padding: 0;
+                margin: 10px 0;
+                font-size: 11pt !important;
+            }
+
+            .rev-heading-large {
+                color: #515366;
+                font-family: sans-serif;
+                font-size: 13pt;
+                font-weight: bold;
+                padding-left: 4%;
+                padding-top: 14px;
+            }
+
+            .rev-heading {
+                color: #515366;
+                font-family: sans-serif;
+                font-size: 12pt;
+                padding-left: 4%;
+                padding-top: 14px;
+            }
+
+            .rev-table {
+                margin-left: 4%; 
+                width: 92%;
+            }
+
+
+            .rev-add-button{
+                width: 180px;
+                font-size: 11pt !important;
+                margin: 0 auto;
+            }
+
+        </style>
+
+
+    </h:head>
+    <h:body style="background-color: #f8f9fa;">
+
+        <div style="margin: 0 auto; max-width: 800px;">
+
+            <h:form id="myForm">
+
+                <div style="margin-top: 48px;" align="center">
+                    <h1>Make a Review</h1>
+                </div>
+                
+                <div class="rev-heading-large-div">
+                    <span class="rev-heading-large">PUBLICATION INFORMATION</span>
+                </div>
+
+
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Title</span>
+                </div>
+                <div>
+                    <p:inputText
+                        class="rev-input"
+                        placeholder="Title"
+                        maxlength="100"/>
+                </div>
+
+
+                <div class="rev-heading-div">
+                    <span class="rev-heading">URL</span>
+                </div>
+                <p:inputText
+                    placeholder="Url" 
+                    class="rev-input" 
+                    maxlength="100"/>
+
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Summary</span>
+                </div>
+                <p:inputTextarea 
+                    class="rev-input"
+                    counter="summaryCounter"
+                    counterTemplate="{0} characters remaining."
+                    placeholder="Write your summary here." 
+                    maxlength="2000"
+                    rows="8" />
+                <br/>
+                <h:outputText
+                    id="summaryCounter" 
+                    class="rev-counter-output"/>
+                <br style="margin-bottom: 20px"/>
+
+
+
+                <div class="rev-heading-large-div">
+                    <span class="rev-heading-large">REVIEW INFORMATION</span>
+                </div>
+
+                <!-- POSITIVES TABLE -->
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Positives</span>
+                </div>
+                <p:dataTable id="positivesTable" 
+                             editable="true"
+                             class="rev-table"
+                             binding="#{positivesBinding}"
+                             widgetVar="positivesTable" 
+                             value="#{reviewBean.positives}">
+                    <p:column style="width: 85%; padding: 0; background-color: #f8f9fa !important;">
+                        <p:inputTextarea
+                            class="rev-input-table"
+                            placeholder="Positive ##{positivesBinding.rowIndex + 1}" 
+                            value="#{reviewBean.positives[positivesBinding.rowIndex]}"
+                            maxlength="500" />
+                    </p:column>
+                </p:dataTable>
+                <div align="center" style="margin: 8px;">
+                    <p:commandButton 
+                        id="addPositive"
+                        type="submit"
+                        style="margin-right: 8px;"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
+                        disabled="#{reviewBean.maxPositivesReached()}"
+                        actionListener="#{reviewBean.addPositive()}"
+                        update="@this removePositive positivesTable"
+                        process="@this removePositive positivesTable"
+                        />
+                    <p:commandButton 
+                        id="removePositive"
+                        icon="pi pi-minus"
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        disabled="#{reviewBean.minPositivesReached()}"
+                        type="submit"
+                        actionListener="#{reviewBean.removePositive()}"
+                        update="@this addPositive positivesTable"
+                        process="@this addPositive positivesTable"/>
+                </div>
+
+
+                <!-- NEGATIVES TABLE -->
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Negatives</span>
+                </div>
+                <p:dataTable id="negativesTable" 
+                             editable="true"
+                             binding="#{negativesBinding}"
+                             widgetVar="negativesTable"
+                             class="rev-table"
+                             value="#{reviewBean.negatives}" >
+                    <p:column style="width: 85%; padding: 0; background-color: #f8f9fa !important;">
+                        <p:inputTextarea 
+                            class="rev-input-table"
+                            placeholder="Negative ##{negativesBinding.rowIndex + 1}" 
+                            value="#{reviewBean.negatives[negativesBinding.rowIndex]}"
+                            maxlength="500"/>
+                    </p:column>
+                </p:dataTable>
+                <div align="center" style="margin: 8px;">
+                    <p:commandButton
+                        id="addNegative"
+                        type="submit"
+                        style="margin-right: 8px;"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
+                        disabled="#{reviewBean.maxNegativesReached()}"
+                        actionListener="#{reviewBean.addNegative()}" 
+                        update="@this removeNegative negativesTable"
+                        process="@this removeNegative negativesTable" />
+                    <p:commandButton
+                        id="removeNegative"
+                        icon="pi pi-minus" 
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        type="submit"
+                        disabled="#{reviewBean.minNegativesReached()}"
+                        actionListener="#{reviewBean.removeNegative()}"
+                        update="@this addNegative negativesTable"
+                        process="@this addNegative negativesTable"/>
+                </div>
+
+                <!-- MAJOR POINTS TABLE -->
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Major Points</span>
+                </div>
+                <p:dataTable id="majorPointsTable" 
+                             editable="true"
+                             binding="#{majorPointsBinding}"
+                             widgetVar="majorPointsTable" 
+                             class="rev-table"
+                             value="#{reviewBean.majorPoints}" >
+                    <p:column style="width: 85%; padding: 0; background-color: #f8f9fa !important;">
+                        <p:inputTextarea 
+                            class="rev-input-table"
+                            placeholder="Major Point ##{majorPointsBinding.rowIndex + 1}" 
+                            value="#{reviewBean.majorPoints[majorPointsBinding.rowIndex]}"
+                            maxlength="1000"/>
+                    </p:column>
+                </p:dataTable>
+                <div align="center" style="margin: 8px;">
+                    <p:commandButton 
+                        id="addMajorPoint"
+                        type="submit"
+                        style="margin-right: 8px;"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
+                        disabled="#{reviewBean.maxMajorPointsReached()}"
+                        actionListener="#{reviewBean.addMajorPoint()}" 
+                        update="@this removeMajorPoint majorPointsTable"
+                        process="@this removeMajorPoint majorPointsTable"/>
+                    <p:commandButton
+                        id="removeMajorPoint"
+                        icon="pi pi-minus"
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        type="submit"
+                        disabled="#{reviewBean.minMajorPointsReached()}"
+                        actionListener="#{reviewBean.removeMajorPoint()}"
+                        update="@this addMajorPoint majorPointsTable"
+                        process="@this addMajorPoint majorPointsTable" />
+                </div>
+
+                <!-- MINOR POINTS TABLE -->
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Minor Points</span>
+                </div>
+                <p:dataTable id="minorPointsTable" 
+                             editable="true"
+                             class="rev-table"
+                             binding="#{minorPointsBinding}"
+                             widgetVar="minorPointsTable" 
+                             value="#{reviewBean.minorPoints}" >
+                    <p:column style="width: 85%; padding: 0; background-color: #f8f9fa !important;">
+                        <p:inputTextarea
+                            class="rev-input-table"
+                            value="#{reviewBean.minorPoints[minorPointsBinding.rowIndex]}"
+                            placeholder="Minor Point ##{minorPointsBinding.rowIndex + 1}"
+                            maxlength="500"/>
+                    </p:column>
+                </p:dataTable>
+                <div align="center" style="margin: 8px;">
+                    <p:commandButton 
+                        id="addMinorPoint"
+                        type="submit"
+                        style="margin-right: 8px;"
+                        styleClass="rounded-button"
+                        icon="pi pi-plus"
+                        disabled="#{reviewBean.maxMinorPointsReached()}"
+                        actionListener="#{reviewBean.addMinorPoint()}" 
+                        update="@this removeMinorPoint minorPointsTable"
+                        process="@this removeMinorPoint minorPointsTable"/>
+                    <p:commandButton 
+                        id="removeMinorPoint"
+                        icon="pi pi-minus"
+                        style="margin-left: 8px;"
+                        styleClass="rounded-button ui-button-danger"
+                        type="submit"
+                        disabled="#{reviewBean.minMinorPointsReached()}"
+                        actionListener="#{reviewBean.removeMinorPoint()}"
+                        update="@this addMinorPoint minorPointsTable"
+                        process="@this addMinorPoint minorPointsTable"/>
+                </div>
+
+                <div class="rev-heading-large-div">
+                    <span class="rev-heading-large">REVIEWER INFORMATION</span>
+                </div>
+
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Recommendation</span>
+                </div>
+                <p:selectOneMenu class="rev-input" value="#{reviewBean.recommendation}">
+                    <f:selectItems value="#{reviewBean.recommendations}"></f:selectItems>
+                </p:selectOneMenu>
+
+
+                <div class="rev-heading-div">
+                    <span class="rev-heading">Reviewer Name</span>
+                </div>
+                <p:inputText maxlength="100" class="rev-input" value="#{reviewBean.reviewerName}"/>
+
+                <div style="margin: 80px 0;" align="center">
+                    <p:commandButton 
+                        style="height: 80px; font-size: 16pt !important; font-weight: bold;"
+                        value="Submit Review" 
+                        type="submit"
+                        styleClass="rounded-button ui-button-success"
+                        actionListener="#{reviewBean.attemptReviewSubmission()}"/>
+                </div>
+
+
+            </h:form>
+        </div>
+
+    </h:body>
+
+
+</html>
+
