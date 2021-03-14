@@ -1,12 +1,60 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
     <h:head>
-        <title>Facelet Title</title>
+        <title>Welcome to ArticleRevSys</title>
+        <style type="text/css">
+
+            .home-button {
+                width: 160px;
+                font-family: sans-serif;
+                font-size: 11pt;
+            }
+            
+        </style>
+
+
     </h:head>
-    <h:body>
-        Hello from Facelets
+    <h:body style="background-color: #f8f9fa;">
+
+        <div style="margin: 0 auto; max-width: 800px;">
+
+            <h:form id="myForm">
+
+                <div align="center">
+                    <h1>ArticleRevSys</h1>
+                </div>
+                
+                <div align="center" style="margin-bottom: 24px;">
+                    <span>
+                        Welcome to <em>ArticleRevSys</em>, a software solution for creating and managing reviews for academic articles.
+                        If you want to create and submit a review, click <b>Make Review</b>. 
+                        To view existing reviews, click <b>Score Review</b>.
+                    </span>
+                </div>
+                
+                <div align="center">
+                    <p:commandButton 
+                        value="Make Review"
+                        style="margin-right: 10px;"
+                        class="home-button"/>
+                    <p:commandButton 
+                        value="Score Review"
+                        style="margin-left: 10px;"
+                        class="home-button"/>
+                </div>
+                
+
+
+            </h:form>
+        </div>
+
     </h:body>
+
+
 </html>
 
