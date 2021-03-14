@@ -25,7 +25,7 @@
 
             <h:form id="myForm">
 
-                <div align="center">
+                <div style="margin-top: 48px;" align="center">
                     <h1>ArticleRevSys</h1>
                 </div>
                 
@@ -40,6 +40,8 @@
                 <div align="center">
                     <p:commandButton 
                         value="Make Review"
+                        type="submit"
+                        action="#{homeBean.navToMakeReview()}"
                         style="margin-right: 10px;"
                         class="home-button"/>
                     <p:commandButton 
