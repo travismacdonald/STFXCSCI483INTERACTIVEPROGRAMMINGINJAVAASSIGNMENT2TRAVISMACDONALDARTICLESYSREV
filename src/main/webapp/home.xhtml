@@ -66,6 +66,11 @@
                         class="home-button"/>
                 </div>
 
+                <div style="height: 100px;"/>
+
+                <div align="center">
+                    <h2>Reviews</h2>
+                </div>
                 <p:dataTable id="reviewsTable"
                              var="review"
                              binding="#{reviewsBinding}"
@@ -102,6 +107,8 @@
                     </p:column>
 
                 </p:dataTable>
+
+                <div style="height: 100px;"/>
 
                 <p:dialog 
                     id="reviewDetails"
@@ -151,7 +158,11 @@
                             ></h:outputText>
 
                         <div align="center" style="margin: 20px;">
-                            <p:rating value="#{articleRevBean.curScore}"/>
+                            <p:rating 
+                                value="#{articleRevBean.curScore}">
+                                <p:ajax event="rate" listener="#{articleRevBean.onRate}"/>
+                                <p:ajax event="cancel" listener="#{articleRevBean.onCancel}"/>
+                            </p:rating>
                         </div>
 
                     </p:scrollPanel>

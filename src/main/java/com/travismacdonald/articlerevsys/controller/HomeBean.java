@@ -52,23 +52,12 @@ public class HomeBean implements Serializable {
     }
 
     public List<Review> getReviews() {
-//        if (reviews == null) {
-//            reviews = ArsRepository.getInstance().getAllReviews();
-//        }
-//        System.out.println("made it here");
-//        return reviews;
-
         return reviews;
     }
 
     public void openReviewDialog(Review review) {
         setCurReview(review);
-        System.out.println("openReviewwwwwwwwww dialog called");
-        System.out.println("revId: " + review.getId());
-//        final Map<String, Object> options = new HashMap();
-//        options.put("modal", true);
-//        PrimeFaces.current().dialog().openDynamic("level1", options, null);
-        System.out.println("my new print statement");
+        System.out.println("openReviewwwwwwwwww dialog called " + review.getId());
     }
 
     public String getCurReviewPublicationTitle() {
@@ -114,8 +103,8 @@ public class HomeBean implements Serializable {
     }
 
     public String getFormattedPoints(List<String> points) {
-        System.out.println("called");
-        System.out.println(points);
+//        System.out.println("called");
+//        System.out.println(points);
         String toReturn = "";
         toReturn += "1. ";
         toReturn += points.get(0);

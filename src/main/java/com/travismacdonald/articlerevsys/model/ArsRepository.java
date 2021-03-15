@@ -177,7 +177,6 @@ public class ArsRepository {
                 final int publicationId = rs.getInt("pub_id");
                 final String summary = rs.getString("summary");
                 final String recommendation = rs.getString("recommendation");
-                System.out.println("rec: " + recommendation);
                 final String reviewerName = rs.getString("reviewer_name");
 
                 final Review review = new Review(
@@ -203,7 +202,6 @@ public class ArsRepository {
         } catch (SQLException ex) {
 
         }
-        System.out.println("WHAT THE FUCK IT ACTUALLY WORKED");
         return reviews;
     }
 

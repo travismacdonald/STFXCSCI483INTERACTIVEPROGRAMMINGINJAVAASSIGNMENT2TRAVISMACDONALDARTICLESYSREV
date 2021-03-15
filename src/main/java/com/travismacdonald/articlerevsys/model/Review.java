@@ -63,40 +63,6 @@ public class Review implements Serializable {
         return positives;
     }
 
-    public void setPublication(Publication publication) {
-        this.publication = publication;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public void setPositives(List<String> positives) {
-        this.positives = positives;
-    }
-
-    public void setNegatives(List<String> negatives) {
-        this.negatives = negatives;
-    }
-
-    public void setMajorPoints(List<String> majorPoints) {
-        this.majorPoints = majorPoints;
-    }
-
-    public void setMinorPoints(List<String> minorPoints) {
-        this.minorPoints = minorPoints;
-    }
-
-    public void setRecommendation(Recommendation recommendation) {
-        this.recommendation = recommendation;
-    }
-
-    public void setReviewerName(String reviewerName) {
-        this.reviewerName = reviewerName;
-    }
-    
-    
-
     public List<String> getNegatives() {
         return negatives;
     }
