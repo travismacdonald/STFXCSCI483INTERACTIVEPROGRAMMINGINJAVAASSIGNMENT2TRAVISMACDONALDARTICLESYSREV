@@ -39,7 +39,6 @@ public class HomeBean implements Serializable {
 //        System.out.println("i'm doing something");
     }
 
-
     public void setCurReview(Review review) {
         curReview = review;
     }
@@ -71,12 +70,61 @@ public class HomeBean implements Serializable {
 //        PrimeFaces.current().dialog().openDynamic("level1", options, null);
         System.out.println("my new print statement");
     }
-    
+
     public String getCurReviewPublicationTitle() {
         if (curReview == null) {
             return "Fuck";
         }
         return curReview.getPublication().getTitle();
+    }
+
+    public String getCurPositives() {
+        if (curReview == null) {
+            return "";
+        }
+        return curReview.getPositives().get(0);
+    }
+
+    public String getFormattedPositivesForReview(Review review) {
+        if (curReview == null) {
+            return "";
+        }
+        return getFormattedPoints(review.getPositives());
+    }
+
+    public String getFormattedNegativesForReview(Review review) {
+        if (curReview == null) {
+            return "";
+        }
+        return getFormattedPoints(review.getNegatives());
+    }
+
+    public String getFormattedMajorPointsForReview(Review review) {
+        if (curReview == null) {
+            return "";
+        }
+        return getFormattedPoints(review.getMajorPoints());
+    }
+
+    public String getFormattedMinorPointsForReview(Review review) {
+        if (curReview == null) {
+            return "";
+        }
+        return getFormattedPoints(review.getMinorPoints());
+    }
+
+    public String getFormattedPoints(List<String> points) {
+        System.out.println("called");
+        System.out.println(points);
+        String toReturn = "";
+        toReturn += "1. ";
+        toReturn += points.get(0);
+        for (int i = 1; i < points.size(); i++) {
+            toReturn += "\n\n";
+            toReturn += String.format("%d. ", i + 1);
+            toReturn += points.get(i);
+        }
+        return toReturn;
     }
 
 }
