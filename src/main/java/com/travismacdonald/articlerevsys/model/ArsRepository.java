@@ -38,24 +38,24 @@ public class ArsRepository {
     }
 
     public List<Publication> getAllPublications() {
-        Connection dbConnection = null;
-        Statement dbStatement = null;
-        ResultSet result = null;
-        Publication publication = null;
-
-        try {
-            dbConnection = dataSource.getConnection();
-            dbStatement = dbConnection.createStatement();
-            String query = "SELECT * FROM Publication";
-            result = dbStatement.executeQuery(query);
-            result.next();
-            System.out.println("Q: " + result.getString("title"));
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            close(result, dbStatement, dbConnection);
-        }
+//        Connection dbConnection = null;
+//        Statement dbStatement = null;
+//        ResultSet result = null;
+//        Publication publication = null;
+//
+//        try {
+//            dbConnection = dataSource.getConnection();
+//            dbStatement = dbConnection.createStatement();
+//            String query = "SELECT * FROM Publication";
+//            result = dbStatement.executeQuery(query);
+//            result.next();
+//            System.out.println("Q: " + result.getString("title"));
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            close(result, dbStatement, dbConnection);
+//        }
         return null;
     }
 
@@ -172,31 +172,31 @@ public class ArsRepository {
         dataSource.setPassword(PASSWORD);
     }
 
-    private void close(ResultSet rs, Statement st, Connection cn) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        if (st != null) {
-            try {
-                st.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        if (cn != null) {
-            try {
-                cn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+//    private void close(ResultSet rs, Statement st, Connection cn) {
+//        if (rs != null) {
+//            try {
+//                rs.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//
+//        if (st != null) {
+//            try {
+//                st.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//
+//        if (cn != null) {
+//            try {
+//                cn.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
 
     private String getDataSourceUrl() {
         return String.format(
