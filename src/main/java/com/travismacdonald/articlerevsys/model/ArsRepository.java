@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,16 +27,182 @@ public class ArsRepository {
     private static final String DATABASE_NAME = "ArticleRevTravis";
     private static final int PORT_NUMBER = 3306;
 
-    private static final ArsRepository instance = new ArsRepository();
+    private static ArsRepository instance = null;
 
-    private MysqlDataSource dataSource = new MysqlDataSource();
+    private final MysqlDataSource dataSource = new MysqlDataSource();
 
     private ArsRepository() {
         connectToDataSource();
     }
 
     public static ArsRepository getInstance() {
+        if (instance == null) {
+            instance = new ArsRepository();
+        }
         return instance;
+    }
+
+    public List<Review> getAllReviews() {
+        final List<Review> reviews = new ArrayList();
+ 
+        
+        Statement query = null;
+        String queryStr = null;
+        ResultSet rs = null;
+
+        try {
+            final Map<Integer, Publication> publicationMap = new HashMap();
+            final Map<Integer, List<String>> positivesMap = new HashMap();
+            final Map<Integer, List<String>> negativesMap = new HashMap();
+            final Map<Integer, List<String>> majorPointsMap = new HashMap();
+            final Map<Integer, List<String>> minorPointsMap = new HashMap();
+            
+            Connection conn = dataSource.getConnection();
+
+            // Get publications
+            query = conn.createStatement();
+            queryStr = "SELECT * FROM Publication;";
+            rs = query.executeQuery(queryStr);
+
+            while (rs.next()) {
+                final int publicationId = rs.getInt("pub_id");
+                final String publicationTitle = rs.getString("title");
+                final String publicationUrl = rs.getString("pub_url");
+                final Publication publication = new Publication(
+                        publicationTitle,
+                        publicationUrl,
+                        publicationId
+                );
+                publicationMap.put(publicationId, publication);
+            }
+
+            rs.close();
+            query.close();
+
+            // Get positives
+            query = conn.createStatement();
+            queryStr = "SELECT rev_id, point_body FROM Point WHERE point_type='pos';";
+            rs = query.executeQuery(queryStr);
+
+            while (rs.next()) {
+                final int reviewId = rs.getInt("rev_id");
+                final String pointBody = rs.getString("point_body");
+
+                if (positivesMap.containsKey(reviewId)) {
+                    final List<String> pointList = (List<String>) positivesMap.get(reviewId);
+                    pointList.add(pointBody);
+                } else {
+                    final List<String> pointList = new ArrayList();
+                    pointList.add(pointBody);
+                    positivesMap.put(reviewId, pointList);
+                }
+            }
+
+            rs.close();
+            query.close();
+
+            // Get negatives
+            query = conn.createStatement();
+            queryStr = "SELECT rev_id, point_body FROM Point WHERE point_type='ngt';";
+            rs = query.executeQuery(queryStr);
+
+            while (rs.next()) {
+                final int reviewId = rs.getInt("rev_id");
+                final String pointBody = rs.getString("point_body");
+
+                if (negativesMap.containsKey(reviewId)) {
+                    final List<String> pointList = (List<String>) negativesMap.get(reviewId);
+                    pointList.add(pointBody);
+                } else {
+                    final List<String> pointList = new ArrayList();
+                    pointList.add(pointBody);
+                    negativesMap.put(reviewId, pointList);
+                }
+            }
+
+            rs.close();
+            query.close();
+
+            // Get Major Points
+            query = conn.createStatement();
+            queryStr = "SELECT rev_id, point_body FROM Point WHERE point_type='maj';";
+            rs = query.executeQuery(queryStr);
+
+            while (rs.next()) {
+                final int reviewId = rs.getInt("rev_id");
+                final String pointBody = rs.getString("point_body");
+
+                if (majorPointsMap.containsKey(reviewId)) {
+                    final List<String> pointList = (List<String>) majorPointsMap.get(reviewId);
+                    pointList.add(pointBody);
+                } else {
+                    final List<String> pointList = new ArrayList();
+                    pointList.add(pointBody);
+                    majorPointsMap.put(reviewId, pointList);
+                }
+            }
+
+            rs.close();
+            query.close();
+
+            // Get Minor Points
+            query = conn.createStatement();
+            queryStr = "SELECT rev_id, point_body FROM Point WHERE point_type='min';";
+            rs = query.executeQuery(queryStr);
+
+            while (rs.next()) {
+                final int reviewId = rs.getInt("rev_id");
+                final String pointBody = rs.getString("point_body");
+
+                if (minorPointsMap.containsKey(reviewId)) {
+                    final List<String> pointList = (List<String>) minorPointsMap.get(reviewId);
+                    pointList.add(pointBody);
+                } else {
+                    final List<String> pointList = new ArrayList();
+                    pointList.add(pointBody);
+                    minorPointsMap.put(reviewId, pointList);
+                }
+            }
+
+            rs.close();
+            query.close();
+
+            // Get all reviews
+            query = conn.createStatement();
+            queryStr = "SELECT * FROM Review;";
+            rs = query.executeQuery(queryStr);
+
+            while (rs.next()) {
+                final int reviewId = rs.getInt("rev_id");
+                final int publicationId = rs.getInt("pub_id");
+                final String summary = rs.getString("summary");
+                final String recommendation = rs.getString("recommendation");
+                final String reviewerName = rs.getString("reviewer_name");
+
+                final Review review = new Review(
+                        publicationMap.get(publicationId),
+                        summary,
+                        positivesMap.get(reviewId),
+                        negativesMap.get(reviewId),
+                        majorPointsMap.get(reviewId),
+                        minorPointsMap.get(reviewId),
+                        null,
+                        reviewerName,
+                        reviewId
+                );
+                reviews.add(review);
+            }
+
+            rs.close();
+            query.close();
+
+            conn.close();
+
+        } catch (SQLException ex) {
+
+        }
+        System.out.println("WHAT THE FUCK IT ACTUALLY WORKED");
+        return reviews;
     }
 
     public List<Publication> getAllPublications() {
@@ -71,7 +239,7 @@ public class ArsRepository {
             insertReview(conn, review);
             insertPoints(conn, review);
             conn.close();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,7 +300,7 @@ public class ArsRepository {
 
         final String pointsQueryStr = "INSERT INTO Point VALUES(?, ?, ?, ?);";
         final PreparedStatement pointsQuery = conn.prepareStatement(pointsQueryStr);
-        
+
         for (String pos : review.getPositives()) {
             pointsQuery.setInt(1, AUTO_INCREMENT);
             pointsQuery.setInt(2, review.getId());
@@ -161,7 +329,7 @@ public class ArsRepository {
             pointsQuery.setString(4, "min");
             pointsQuery.addBatch();
         }
-        
+
         pointsQuery.executeBatch();
         pointsQuery.close();
     }
@@ -171,32 +339,6 @@ public class ArsRepository {
         dataSource.setUser(USER);
         dataSource.setPassword(PASSWORD);
     }
-
-//    private void close(ResultSet rs, Statement st, Connection cn) {
-//        if (rs != null) {
-//            try {
-//                rs.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//
-//        if (st != null) {
-//            try {
-//                st.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//
-//        if (cn != null) {
-//            try {
-//                cn.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
 
     private String getDataSourceUrl() {
         return String.format(

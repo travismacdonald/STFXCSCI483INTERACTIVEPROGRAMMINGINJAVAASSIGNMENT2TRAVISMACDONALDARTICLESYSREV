@@ -14,7 +14,7 @@
                 font-family: sans-serif;
                 font-size: 11pt;
             }
-            
+
         </style>
 
 
@@ -28,7 +28,7 @@
                 <div style="margin-top: 48px;" align="center">
                     <h1>ArticleRevSys</h1>
                 </div>
-                
+
                 <div align="center" style="margin-bottom: 24px;">
                     <span>
                         Welcome to <em>ArticleRevSys</em>, a software solution for creating and managing reviews for academic articles.
@@ -36,7 +36,7 @@
                         To view existing reviews, click <b>Score Review</b>.
                     </span>
                 </div>
-                
+
                 <div align="center">
                     <p:commandButton 
                         value="Make Review"
@@ -49,9 +49,34 @@
                         type="submit"
                         action="#{homeBean.doSomething()}"
                         style="margin-left: 10px;"
+                        update="reviewsTable"
+                        process="reviewsTable"
                         class="home-button"/>
                 </div>
-                
+
+                <p:dataTable id="reviewsTable"
+                             var="review"
+                             binding="#{reviewsBinding}"
+                             widgetVar="reviewsTable" 
+                             value="#{homeBean.reviews}">
+
+                    <p:column>
+                        <h:outputText
+                            value="#{review.publication.title}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <h:outputText
+                            value="#{review.reviewerName}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <h:outputText
+                            value="#{review.recommendation}" />
+                    </p:column>
+                    
+                </p:dataTable>
+
 
 
             </h:form>

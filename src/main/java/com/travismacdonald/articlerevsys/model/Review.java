@@ -5,16 +5,16 @@ import java.util.List;
 
 public class Review implements Serializable {
 
-    private final Publication publication;
-    private final String summary;
+    private Publication publication;
+    private String summary;
 
-    private final List<String> positives;
-    private final List<String> negatives;
-    private final List<String> majorPoints;
-    private final List<String> minorPoints;
+    private List<String> positives;
+    private List<String> negatives;
+    private List<String> majorPoints;
+    private List<String> minorPoints;
 
-    private final Recommendation recommendation;
-    private final String reviewerName;
+    private Recommendation recommendation;
+    private String reviewerName;
     
     private int id;
 
@@ -59,6 +59,40 @@ public class Review implements Serializable {
     public List<String> getPositives() {
         return positives;
     }
+
+    public void setPublication(Publication publication) {
+        this.publication = publication;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setPositives(List<String> positives) {
+        this.positives = positives;
+    }
+
+    public void setNegatives(List<String> negatives) {
+        this.negatives = negatives;
+    }
+
+    public void setMajorPoints(List<String> majorPoints) {
+        this.majorPoints = majorPoints;
+    }
+
+    public void setMinorPoints(List<String> minorPoints) {
+        this.minorPoints = minorPoints;
+    }
+
+    public void setRecommendation(Recommendation recommendation) {
+        this.recommendation = recommendation;
+    }
+
+    public void setReviewerName(String reviewerName) {
+        this.reviewerName = reviewerName;
+    }
+    
+    
 
     public List<String> getNegatives() {
         return negatives;
