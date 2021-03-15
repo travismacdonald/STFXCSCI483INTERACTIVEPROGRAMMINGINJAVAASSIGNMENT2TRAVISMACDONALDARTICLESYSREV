@@ -26,9 +26,18 @@ public class HomeBean implements Serializable {
 
     private Review curReview = null;
 
+    public String navToHome() {
+        return "/home.xhtml?faces-redirect=true";
+    }
+    
     public String navToMakeReview() {
         System.out.println("hi");
         return "/make_review.xhtml?faces-redirect=true";
+    }
+    
+    public String navToScoreReview() {
+        System.out.println("nav to scoreReviews called");
+        return "/reviews.xhtml?faces-redirect=true";
     }
 
     public void doSomething() {

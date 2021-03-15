@@ -25,6 +25,15 @@
                 font-size: 10pt !important;
                 white-space: pre-wrap;
             }
+
+            .centeredMenuBar.ui-menubar {
+                text-align: center;
+            }
+
+            .centeredMenuBar .ui-menu-list {
+                display: inline-block;
+            }
+
         </style>
 
 
@@ -33,7 +42,15 @@
 
         <div class="card" style="margin: 0 auto; max-width: 800px;">
 
+
+
             <h:form id="myForm">
+
+                <p:menubar styleClass="centeredMenuBar" style="width: 800px">
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{homeBean.navToHome}"/>
+
+                </p:menubar>
+
 
                 <p:growl id="growl" showDetail="true"/>
 
@@ -59,115 +76,13 @@
                     <p:commandButton 
                         value="Score Review"
                         type="submit"
-                        action="#{homeBean.doSomething()}"
+                        action="#{homeBean.navToScoreReview()}"
                         style="margin-left: 10px;"
-                        update="reviewsTable"
-                        process="reviewsTable"
                         class="home-button"/>
                 </div>
 
                 <div style="height: 100px;"/>
 
-                <div align="center">
-                    <h2>Reviews</h2>
-                </div>
-                <p:dataTable id="reviewsTable"
-                             var="review"
-                             binding="#{reviewsBinding}"
-                             widgetVar="reviewsTable" 
-                             value="#{homeBean.reviews}">
-
-                    <p:column headerText="Title" style="width: 40%">
-                        <h:outputText
-                            value="#{review.publication.title}" />
-                    </p:column>
-
-                    <p:column headerText="Reviewer">
-                        <h:outputText
-                            value="#{review.reviewerName}" />
-                    </p:column>
-
-                    <p:column headerText="Recommendation">
-                        <h:outputText
-                            value="#{review.recommendation.toString()}"/>
-                    </p:column>
-
-                    <p:column>
-                        <p:commandButton
-                            id="btn"
-                            value="Details"
-                            type="submit"
-                            action="#{homeBean.openReviewDialog(review)}"
-                            oncomplete="PF('reviewDetails').show()"
-                            update="@all"
-                            process="@all"
-                            >
-                            <f:actionListener binding="#{articleRevBean.setCurReview(review)}" />
-                        </p:commandButton>
-                    </p:column>
-
-                </p:dataTable>
-
-                <div style="height: 100px;"/>
-
-                <p:dialog 
-                    id="reviewDetails"
-                    header="#{homeBean.curReview.publication.title}" 
-                    widgetVar="reviewDetails" 
-                    minHeight="500"
-                    height="800"
-                    width="700"
-                    modal="true"
-                    showEffect="fade" >
-                    <p:scrollPanel style="border: none;">
-
-                        <p class="details-header">Publication URL</p>
-                        <p class="details-body">#{homeBean.curReview.publication.url}</p>
-
-                        <p class="details-header">Reviewer</p>
-                        <p class="details-body">#{homeBean.curReview.reviewerName}</p>
-
-                        <p class="details-header">Summary</p>
-                        <p class="details-body">#{homeBean.curReview.summary}</p>
-
-
-                        <p class="details-header">Positives</p>
-                        <h:outputText 
-                            styleClass="details-body"
-                            value="#{homeBean.getFormattedPositivesForReview(homeBean.curReview)}"
-                            ></h:outputText>
-
-                        <p class="details-header">Negatives</p>
-                        <h:outputText 
-                            styleClass="details-body"
-                            value="#{homeBean.getFormattedNegativesForReview(homeBean.curReview)}"
-                            ></h:outputText>
-
-                        <p class="details-header">Major Points</p>
-                        <h:outputText 
-                            styleClass="details-body"
-                            value="#{homeBean.getFormattedMajorPointsForReview(homeBean.curReview)}"
-                            ></h:outputText>
-
-                        <p class="details-header">Minor Points</p>
-                        <h:outputText 
-                            styleClass="details-body"
-
-                            value="#{homeBean.getFormattedMinorPointsForReview(homeBean.curReview)}"
-
-                            ></h:outputText>
-
-                        <div align="center" style="margin: 20px;">
-                            <p:rating 
-                                value="#{articleRevBean.curScore}">
-                                <p:ajax event="rate" listener="#{articleRevBean.onRate}"/>
-                                <p:ajax event="cancel" listener="#{articleRevBean.onCancel}"/>
-                            </p:rating>
-                        </div>
-
-                    </p:scrollPanel>
-
-                </p:dialog>
 
             </h:form>
         </div>
