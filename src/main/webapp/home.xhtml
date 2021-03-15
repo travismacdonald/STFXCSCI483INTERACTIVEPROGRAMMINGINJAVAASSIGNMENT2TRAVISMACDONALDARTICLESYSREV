@@ -21,7 +21,7 @@
     </h:head>
     <h:body style="background-color: #f8f9fa;">
 
-        <div style="margin: 0 auto; max-width: 800px;">
+        <div class="card" style="margin: 0 auto; max-width: 800px;">
 
             <h:form id="myForm">
 
@@ -60,24 +60,24 @@
                              widgetVar="reviewsTable" 
                              value="#{homeBean.reviews}">
 
-                    <p:column>
+                     <p:column headerText="Title" style="width: 40%">
                         <h:outputText
                             value="#{review.publication.title}" />
                     </p:column>
                     
-                    <p:column>
+                    <p:column headerText="Reviewer">
                         <h:outputText
                             value="#{review.reviewerName}" />
                     </p:column>
                     
-                    <p:column>
+                    <p:column headerText="Recommendation">
                         <h:outputText
                             value="#{review.recommendation.toString()}"/>
                     </p:column>
                     
                     <p:column>
                         <p:commandButton
-                            value="button"
+                            value="Details"
                             />
                     </p:column>
                     
