@@ -14,17 +14,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.faces.view.facelets.FaceletContext;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-@SessionScoped
+@ViewScoped
 @Named("reviewBean")
 public class ReviewBean implements Serializable {
 
@@ -36,22 +33,28 @@ public class ReviewBean implements Serializable {
     private String publicationUrl = "";
     private String publicationSummary = "";
 
-    private List<String> positives = new ArrayList(Arrays.asList(""));
-    private List<String> negatives = new ArrayList(Arrays.asList(""));
-    private List<String> majorPoints = new ArrayList(Arrays.asList(""));
-    private List<String> minorPoints = new ArrayList(Arrays.asList(""));
+    private final List<String> positives = new ArrayList(Arrays.asList(""));
+    private final List<String> negatives = new ArrayList(Arrays.asList(""));
+    private final List<String> majorPoints = new ArrayList(Arrays.asList(""));
+    private final List<String> minorPoints = new ArrayList(Arrays.asList(""));
 
     @Enumerated(EnumType.STRING)
     private Recommendation recommendation;
     private String reviewerName = "";
 
-    public void attemptReviewSubmission() {
+    /**
+     * Attempts to validate and submit the form.If successful, it saves the
+     * review to the database and navigates to home, otherwise it prompts the
+     * user to fix all fields that failed validation.
+     */
+    public String attemptReviewSubmission() {
         if (validateSubmissionForm()) {
-            showSubmissionError("nice", "nice");
             discardBlankPoints();
             final Review review = makeReview();
             ArsRepository.getInstance().addReview(review);
+            return "/home.xhtml?faces-redirect=true";
         }
+        return null;
     }
 
     public String getReviewerName() {
@@ -104,46 +107,38 @@ public class ReviewBean implements Serializable {
 
     public void addMajorPoint() {
         majorPoints.add("");
-        System.out.println("addMajorPointCalled");
     }
 
     public void addMinorPoint() {
         minorPoints.add("");
-        System.out.println("addMinorPointCalled");
     }
 
     public void addPositive() {
         positives.add("");
-        System.out.println("addPositiveCalled");
     }
 
     public void addNegative() {
         negatives.add("");
-        System.out.println("addNegative called");
     }
 
     public void removeMajorPoint() {
         int total = majorPoints.size();
         majorPoints.remove(total - 1);
-        System.out.println("REMOVED major");
     }
 
     public void removeMinorPoint() {
         int total = minorPoints.size();
         minorPoints.remove(total - 1);
-        System.out.println("REMOVED minor");
     }
 
     public void removePositive() {
         int total = positives.size();
         positives.remove(total - 1);
-        System.out.println("REMOVED Positive");
     }
 
     public void removeNegative() {
         int total = negatives.size();
         negatives.remove(total - 1);
-        System.out.println("REMOVED negatives");
     }
 
     public List<Recommendation> getRecommendations() {
@@ -360,18 +355,13 @@ public class ReviewBean implements Serializable {
         return review;
     }
 
-    /**
-     * Removes all blank points from positives, negatives, major, and minor
-     * points.
-     *
-     */
     private void discardBlankPoints() {
         discardBlanksForPoints(positives);
         discardBlanksForPoints(negatives);
         discardBlanksForPoints(majorPoints);
         discardBlanksForPoints(minorPoints);
     }
-    
+
     private void discardBlanksForPoints(List<String> points) {
         final List<String> toRemove = new ArrayList();
         for (String min : points) {
