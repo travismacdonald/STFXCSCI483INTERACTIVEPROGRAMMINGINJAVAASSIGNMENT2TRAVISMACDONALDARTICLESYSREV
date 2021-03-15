@@ -24,6 +24,8 @@ public class HomeBean implements Serializable {
 
     private List<Review> reviews = ArsRepository.getInstance().getAllReviews();
 
+    private Review curReview = null;
+
     public String navToMakeReview() {
         System.out.println("hi");
         return "/make_review.xhtml?faces-redirect=true";
@@ -35,6 +37,15 @@ public class HomeBean implements Serializable {
 //        ArsRepository repo = ArsRepository.getInstance();
 //        repo.getAllPublications();
 //        System.out.println("i'm doing something");
+    }
+
+
+    public void setCurReview(Review review) {
+        curReview = review;
+    }
+
+    public Review getCurReview() {
+        return curReview;
     }
 
     public void setReviews(List<Review> reviews) {
@@ -50,14 +61,22 @@ public class HomeBean implements Serializable {
 
         return reviews;
     }
-    
-    public void openReviewDialog(int reviewId) {
+
+    public void openReviewDialog(Review review) {
+        setCurReview(review);
         System.out.println("openReviewwwwwwwwww dialog called");
-        System.out.println("revId: " + reviewId);
-        final Map<String,Object> options = new HashMap();
-        options.put("modal", true);
-        PrimeFaces.current().dialog().openDynamic("level1", options, null);
+        System.out.println("revId: " + review.getId());
+//        final Map<String, Object> options = new HashMap();
+//        options.put("modal", true);
+//        PrimeFaces.current().dialog().openDynamic("level1", options, null);
         System.out.println("my new print statement");
+    }
+    
+    public String getCurReviewPublicationTitle() {
+        if (curReview == null) {
+            return "Fuck";
+        }
+        return curReview.getPublication().getTitle();
     }
 
 }

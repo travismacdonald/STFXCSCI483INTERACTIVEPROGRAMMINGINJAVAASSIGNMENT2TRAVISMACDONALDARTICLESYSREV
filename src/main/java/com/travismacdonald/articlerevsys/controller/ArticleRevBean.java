@@ -5,6 +5,7 @@
  */
 package com.travismacdonald.articlerevsys.controller;
 
+import com.travismacdonald.articlerevsys.model.Review;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,8 @@ import javax.inject.Named;
 public class ArticleRevBean implements Serializable {
     
     final Map<Integer, Integer> reviewScores = new HashMap();
-    
+
+
     public Integer getScore(int reviewId) {
         return reviewScores.get(reviewId);
     }
