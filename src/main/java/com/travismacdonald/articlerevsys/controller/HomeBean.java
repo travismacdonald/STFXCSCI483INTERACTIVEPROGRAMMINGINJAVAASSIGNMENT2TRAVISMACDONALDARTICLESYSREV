@@ -10,15 +10,19 @@ import com.travismacdonald.articlerevsys.model.Review;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
 
 @Named("homeBean")
-@SessionScoped
+@ViewScoped
 public class HomeBean implements Serializable {
 
-    private List<Review> reviews = null;
+    private List<Review> reviews = ArsRepository.getInstance().getAllReviews();
 
     public String navToMakeReview() {
         System.out.println("hi");
@@ -44,7 +48,16 @@ public class HomeBean implements Serializable {
 //        System.out.println("made it here");
 //        return reviews;
 
-        return ArsRepository.getInstance().getAllReviews();
+        return reviews;
+    }
+    
+    public void openReviewDialog(int reviewId) {
+        System.out.println("openReviewwwwwwwwww dialog called");
+        System.out.println("revId: " + reviewId);
+        final Map<String,Object> options = new HashMap();
+        options.put("modal", true);
+        PrimeFaces.current().dialog().openDynamic("level1", options, null);
+        System.out.println("my new print statement");
     }
 
 }
