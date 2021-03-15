@@ -177,6 +177,7 @@ public class ArsRepository {
                 final int publicationId = rs.getInt("pub_id");
                 final String summary = rs.getString("summary");
                 final String recommendation = rs.getString("recommendation");
+                System.out.println("rec: " + recommendation);
                 final String reviewerName = rs.getString("reviewer_name");
 
                 final Review review = new Review(
@@ -186,7 +187,8 @@ public class ArsRepository {
                         negativesMap.get(reviewId),
                         majorPointsMap.get(reviewId),
                         minorPointsMap.get(reviewId),
-                        null,
+//                        null,
+                        Recommendation.valueOf(recommendation),
                         reviewerName,
                         reviewId
                 );
@@ -347,6 +349,14 @@ public class ArsRepository {
                 PORT_NUMBER,
                 DATABASE_NAME
         );
+    }
+    
+    private Recommendation recStrToEnum(String recStr) {
+        switch (recStr){
+            case "Accept":
+                return Recommendation.ACCEPT;
+        }
+        return null;
     }
 
 }

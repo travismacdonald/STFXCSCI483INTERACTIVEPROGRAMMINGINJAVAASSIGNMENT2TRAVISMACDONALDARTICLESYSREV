@@ -51,7 +51,7 @@ INSERT INTO Review VALUES
     1,
     1,
     "This paper discusses pizza and mathemically proves why it is the greatest food category on earth.",
-    "Accept",
+    "ACCEPT",
     "Franz Kafka"
 );
 
@@ -117,7 +117,7 @@ INSERT INTO Review VALUES
     2,
     2,
     "Food-Drug-Interactions (FDI’s) is the study of how food compounds interact with drugs prescribed to patients. This is valuable because some drugs have negative side effects when taken with certain foods, which counteract effectiveness of the drugs given to patients. It will be valuable for doctors and patients alike to have a better understanding of which foods should be avoided, to increase the effectiveness of the treatment. The authors managed to download and obtain all related to drug-drug-interactions and all information related to food compounds. The datasets were preprocessed, and a structure similarity profile (SSP) was used on the drug-interactions dataset to obtain final resulting dataset of 869035 drug-drug-interactions for 1683 drugs and found 11561 food-compound pairs for 1244 unique compounds (SMILES) from the food dataset. The authors now need to decide on which problem they want address in the field, for example, to find out how the metabolism is affected by food. Once that has addressed a machine learning model will be produced from the datasets to produce results on the problem they want to address.",
-    "Weak Reject",
+    "REJECT",
     "Mbongeni Ndlovu"
 );
 

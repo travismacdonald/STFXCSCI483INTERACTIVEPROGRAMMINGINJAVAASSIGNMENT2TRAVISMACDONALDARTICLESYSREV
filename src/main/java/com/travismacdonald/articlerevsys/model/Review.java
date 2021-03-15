@@ -2,6 +2,8 @@ package com.travismacdonald.articlerevsys.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 public class Review implements Serializable {
 
@@ -12,7 +14,8 @@ public class Review implements Serializable {
     private List<String> negatives;
     private List<String> majorPoints;
     private List<String> minorPoints;
-
+    
+//    @Enumerated(EnumType.STRING)
     private Recommendation recommendation;
     private String reviewerName;
     

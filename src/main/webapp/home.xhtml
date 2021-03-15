@@ -72,7 +72,13 @@
                     
                     <p:column>
                         <h:outputText
-                            value="#{review.recommendation}" />
+                            value="#{review.recommendation.toString()}"/>
+                    </p:column>
+                    
+                    <p:column>
+                        <p:commandButton
+                            value="button"
+                            />
                     </p:column>
                     
                 </p:dataTable>
