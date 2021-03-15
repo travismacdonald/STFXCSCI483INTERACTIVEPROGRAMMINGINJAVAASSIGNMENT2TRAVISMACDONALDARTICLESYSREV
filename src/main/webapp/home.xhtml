@@ -96,8 +96,9 @@
                             oncomplete="PF('reviewDetails').show()"
                             update="@all"
                             process="@all"
-
-                            />
+                            >
+                            <f:actionListener binding="#{articleRevBean.setCurReview(review)}" />
+                        </p:commandButton>
                     </p:column>
 
                 </p:dataTable>
@@ -111,17 +112,17 @@
                     width="700"
                     modal="true"
                     showEffect="fade" >
-                    <p:scrollPanel style="border: none; margin-top: 0px; margin-bottom: 40px !important;">
-                        
+                    <p:scrollPanel style="border: none;">
+
                         <p class="details-header">Publication URL</p>
                         <p class="details-body">#{homeBean.curReview.publication.url}</p>
-                        
+
                         <p class="details-header">Reviewer</p>
                         <p class="details-body">#{homeBean.curReview.reviewerName}</p>
 
                         <p class="details-header">Summary</p>
                         <p class="details-body">#{homeBean.curReview.summary}</p>
-                        
+
 
                         <p class="details-header">Positives</p>
                         <h:outputText 
@@ -144,12 +145,13 @@
                         <p class="details-header">Minor Points</p>
                         <h:outputText 
                             styleClass="details-body"
+
                             value="#{homeBean.getFormattedMinorPointsForReview(homeBean.curReview)}"
+
                             ></h:outputText>
-                        
-                        <div>
-                            
-                            <p:commandButton value="fuck"></p:commandButton>
+
+                        <div align="center" style="margin: 20px;">
+                            <p:rating value="#{articleRevBean.curScore}"/>
                         </div>
 
                     </p:scrollPanel>
