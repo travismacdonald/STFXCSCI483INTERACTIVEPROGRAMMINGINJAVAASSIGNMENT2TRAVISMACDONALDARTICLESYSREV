@@ -2,32 +2,32 @@ package com.travismacdonald.articlerevsys.model;
 
 import java.io.Serializable;
 
-
 public class Publication implements Serializable {
 
-    private String url;
+    private final String url;
+    private final String title;
+    private int id;
 
-    private String title;
-
-    public Publication(String url, String title) {
-        this.url = url;
+    public Publication(String title, String url, int id) {
         this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
         this.url = url;
+        this.id = -1;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getUrl() {
+        return url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

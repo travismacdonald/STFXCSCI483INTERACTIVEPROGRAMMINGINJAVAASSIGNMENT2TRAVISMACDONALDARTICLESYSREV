@@ -14,21 +14,50 @@
                 font-family: sans-serif;
                 font-size: 11pt;
             }
-            
+
+
+            .details-header {
+                font-weight: bold;
+                margin-top: 40px;
+            }
+
+            .details-body {
+                font-size: 10pt !important;
+                white-space: pre-wrap;
+            }
+
+            .centeredMenuBar.ui-menubar {
+                text-align: center;
+            }
+
+            .centeredMenuBar .ui-menu-list {
+                display: inline-block;
+            }
+
         </style>
 
 
     </h:head>
     <h:body style="background-color: #f8f9fa;">
 
-        <div style="margin: 0 auto; max-width: 800px;">
+        <div class="card" style="margin: 0 auto; max-width: 800px;">
+
+
 
             <h:form id="myForm">
+
+                <p:menubar styleClass="centeredMenuBar" style="width: 800px">
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{homeBean.navToHome}"/>
+
+                </p:menubar>
+
+
+                <p:growl id="growl" showDetail="true"/>
 
                 <div style="margin-top: 48px;" align="center">
                     <h1>ArticleRevSys</h1>
                 </div>
-                
+
                 <div align="center" style="margin-bottom: 24px;">
                     <span>
                         Welcome to <em>ArticleRevSys</em>, a software solution for creating and managing reviews for academic articles.
@@ -36,7 +65,7 @@
                         To view existing reviews, click <b>Score Review</b>.
                     </span>
                 </div>
-                
+
                 <div align="center">
                     <p:commandButton 
                         value="Make Review"
@@ -46,10 +75,13 @@
                         class="home-button"/>
                     <p:commandButton 
                         value="Score Review"
+                        type="submit"
+                        action="#{homeBean.navToScoreReview()}"
                         style="margin-left: 10px;"
                         class="home-button"/>
                 </div>
-                
+
+                <div style="height: 100px;"/>
 
 
             </h:form>

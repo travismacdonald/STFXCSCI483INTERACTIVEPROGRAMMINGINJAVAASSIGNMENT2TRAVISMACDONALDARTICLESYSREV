@@ -65,7 +65,6 @@
             .rev-input-table {
                 color: #515366;
                 width: 100%;
-                padding: 0;
                 margin: 10px 0;
                 font-size: 11pt !important;
             }
@@ -98,6 +97,14 @@
                 font-size: 11pt !important;
                 margin: 0 auto;
             }
+            
+                        .centeredMenuBar.ui-menubar {
+                text-align: center;
+            }
+
+            .centeredMenuBar .ui-menu-list {
+                display: inline-block;
+            }
 
         </style>
 
@@ -105,14 +112,25 @@
     </h:head>
     <h:body style="background-color: #f8f9fa;">
 
+
+
         <div style="margin: 0 auto; max-width: 800px;">
 
+            <p:growl id="rev-msg" showSummary="true" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
+
             <h:form id="myForm">
+
+                <p:menubar styleClass="centeredMenuBar" style="width: 800px">
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{homeBean.navToHome}"/>
+
+                </p:menubar>
 
                 <div style="margin-top: 48px;" align="center">
                     <h1>Make a Review</h1>
                 </div>
-                
+
                 <div class="rev-heading-large-div">
                     <span class="rev-heading-large">PUBLICATION INFORMATION</span>
                 </div>
@@ -124,6 +142,7 @@
                 <div>
                     <p:inputText
                         class="rev-input"
+                        value="#{reviewBean.publicationTitle}"
                         placeholder="Title"
                         maxlength="100"/>
                 </div>
@@ -133,8 +152,9 @@
                     <span class="rev-heading">URL</span>
                 </div>
                 <p:inputText
-                    placeholder="Url" 
-                    class="rev-input" 
+                    placeholder="Url"
+                    class="rev-input"
+                    value="#{reviewBean.publicationUrl}"
                     maxlength="100"/>
 
                 <div class="rev-heading-div">
@@ -143,6 +163,7 @@
                 <p:inputTextarea 
                     class="rev-input"
                     counter="summaryCounter"
+                    value="#{reviewBean.publicationSummary}"
                     counterTemplate="{0} characters remaining."
                     placeholder="Write your summary here." 
                     maxlength="2000"
@@ -348,7 +369,9 @@
                         value="Submit Review" 
                         type="submit"
                         styleClass="rounded-button ui-button-success"
-                        actionListener="#{reviewBean.attemptReviewSubmission()}"/>
+                        action="#{reviewBean.attemptReviewSubmission()}">
+
+                    </p:commandButton>
                 </div>
 
 
