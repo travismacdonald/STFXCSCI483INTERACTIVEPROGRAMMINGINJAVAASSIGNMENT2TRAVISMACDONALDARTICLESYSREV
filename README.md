@@ -58,3 +58,8 @@ The reason for implemented this is to enforce *some* limit on the amount of info
 
 ![alt text](screenshots/revs.png)
 ![alt text](screenshots/rev_detail.png)
+
+
+# Workflow
+
+![alt text](workflow/workflow.png)
