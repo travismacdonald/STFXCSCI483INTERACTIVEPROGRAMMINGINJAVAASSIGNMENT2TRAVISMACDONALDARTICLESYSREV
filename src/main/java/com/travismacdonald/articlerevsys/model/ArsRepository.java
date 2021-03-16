@@ -24,13 +24,14 @@ public class ArsRepository {
     /*
      * CHANGE THE THREE VALUES BELOW
      */
-    private static final String USER = "travism";
-    private static final String PASSWORD = "myPassword123$";
+    private static final String USER = "YOUR_USERNAME_HERE";
+    private static final String PASSWORD = "YOUR_PASSWORD_HERE";
     private static final String SERVER_NAME = "localhost";
     /*
      * CHANGE THE THREE VALUES ABOVE
      */
     
+    // This is the name used in the setup.sql file.
     private static final String DATABASE_NAME = "ArticleRevTravis";
     private static final int PORT_NUMBER = 3306;
 

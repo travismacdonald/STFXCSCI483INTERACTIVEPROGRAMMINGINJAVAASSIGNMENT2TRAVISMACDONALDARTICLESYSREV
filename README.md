@@ -18,8 +18,8 @@ Follow these steps to setup the project.
 
 1. Clone project.
 2. Build project to download dependencies.
-3. Run `setup.sql` (paste into MySQL terminal).
-4. Update values in `ArsRepository.java` to match your own values.
+3. Run [`setup.sql`](mysql_queries/setup.sql) (paste into MySQL terminal).
+4. Update values in [`ArsRepository.java`](src/main/java/com/travismacdonald/articlerevsys/model/ArsRepository.java) to match your own values (lines 27-28).
 5. Run in Mozilla*.
 
 \*Website was built using Mozilla. Some features are buggy on Chrome.
