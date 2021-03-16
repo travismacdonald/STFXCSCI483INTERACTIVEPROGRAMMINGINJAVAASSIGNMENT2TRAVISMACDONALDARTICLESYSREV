@@ -21,9 +21,16 @@ public class ArsRepository {
 
     private static final int AUTO_INCREMENT = 0;
 
+    /*
+     * CHANGE THE THREE VALUES BELOW
+     */
     private static final String USER = "travism";
     private static final String PASSWORD = "myPassword123$";
     private static final String SERVER_NAME = "localhost";
+    /*
+     * CHANGE THE THREE VALUES ABOVE
+     */
+    
     private static final String DATABASE_NAME = "ArticleRevTravis";
     private static final int PORT_NUMBER = 3306;
 
@@ -44,7 +51,6 @@ public class ArsRepository {
 
     public List<Review> getAllReviews() {
         final List<Review> reviews = new ArrayList();
- 
         
         Statement query = null;
         String queryStr = null;
@@ -186,7 +192,6 @@ public class ArsRepository {
                         negativesMap.get(reviewId),
                         majorPointsMap.get(reviewId),
                         minorPointsMap.get(reviewId),
-//                        null,
                         Recommendation.valueOf(recommendation),
                         reviewerName,
                         reviewId
@@ -203,28 +208,6 @@ public class ArsRepository {
 
         }
         return reviews;
-    }
-
-    public List<Publication> getAllPublications() {
-//        Connection dbConnection = null;
-//        Statement dbStatement = null;
-//        ResultSet result = null;
-//        Publication publication = null;
-//
-//        try {
-//            dbConnection = dataSource.getConnection();
-//            dbStatement = dbConnection.createStatement();
-//            String query = "SELECT * FROM Publication";
-//            result = dbStatement.executeQuery(query);
-//            result.next();
-//            System.out.println("Q: " + result.getString("title"));
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ArsRepository.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            close(result, dbStatement, dbConnection);
-//        }
-        return null;
     }
 
     public boolean addReview(Review review) {
@@ -347,14 +330,6 @@ public class ArsRepository {
                 PORT_NUMBER,
                 DATABASE_NAME
         );
-    }
-    
-    private Recommendation recStrToEnum(String recStr) {
-        switch (recStr){
-            case "Accept":
-                return Recommendation.ACCEPT;
-        }
-        return null;
     }
 
 }

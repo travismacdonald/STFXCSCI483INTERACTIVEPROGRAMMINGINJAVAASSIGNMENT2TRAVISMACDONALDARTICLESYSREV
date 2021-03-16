@@ -27,19 +27,15 @@ public class ArticleRevBean implements Serializable {
     }
 
     public void setCurReview(Review curReview) {
-        System.out.println("setCurRev called " + curReview.getId());
         this.curReview = curReview;
         this.curScore = reviewScores.getOrDefault(curReview.getId(), 0);
     }
 
     public int getCurScore() {
-        String printStr = "getCurScore called";
-        System.out.println(printStr);
         return curScore;
     }
 
     public void setCurScore(int curScore) {
-        System.out.println("set cur score called");
         this.curScore = curScore;
         reviewScores.put(curReview.getId(), curScore);
     }

@@ -9,14 +9,8 @@ import com.travismacdonald.articlerevsys.model.ArsRepository;
 import com.travismacdonald.articlerevsys.model.Review;
 import java.io.Serializable;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import org.primefaces.PrimeFaces;
 
 @Named("homeBean")
 @ViewScoped
@@ -31,21 +25,11 @@ public class HomeBean implements Serializable {
     }
     
     public String navToMakeReview() {
-        System.out.println("hi");
         return "/make_review.xhtml?faces-redirect=true";
     }
     
     public String navToScoreReview() {
-        System.out.println("nav to scoreReviews called");
         return "/reviews.xhtml?faces-redirect=true";
-    }
-
-    public void doSomething() {
-        System.out.println("hi");
-//        System.out.println("i'm doing something!");
-//        ArsRepository repo = ArsRepository.getInstance();
-//        repo.getAllPublications();
-//        System.out.println("i'm doing something");
     }
 
     public void setCurReview(Review review) {
@@ -66,21 +50,13 @@ public class HomeBean implements Serializable {
 
     public void openReviewDialog(Review review) {
         setCurReview(review);
-        System.out.println("openReviewwwwwwwwww dialog called " + review.getId());
     }
 
     public String getCurReviewPublicationTitle() {
         if (curReview == null) {
-            return "Fuck";
-        }
-        return curReview.getPublication().getTitle();
-    }
-
-    public String getCurPositives() {
-        if (curReview == null) {
             return "";
         }
-        return curReview.getPositives().get(0);
+        return curReview.getPublication().getTitle();
     }
 
     public String getFormattedPositivesForReview(Review review) {
@@ -112,8 +88,6 @@ public class HomeBean implements Serializable {
     }
 
     public String getFormattedPoints(List<String> points) {
-//        System.out.println("called");
-//        System.out.println(points);
         String toReturn = "";
         toReturn += "1. ";
         toReturn += points.get(0);
